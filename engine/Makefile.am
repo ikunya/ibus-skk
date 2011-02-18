@@ -26,6 +26,8 @@ engine_skk_PYTHON = \
 	kzik.py \
 	nicola.py \
 	$(NULL)
+engine_skk_DATA = \
+	keyboard.xml
 engine_skkdir = $(pkgdatadir)/engine
 
 libexec_SCRIPTS = ibus-engine-skk
