@@ -666,14 +666,16 @@ class Engine(ibus.EngineBase):
         return self.process_key_event(symbol.get_xkeysym(), keycode, modifiers)
 
     def __virtual_key_pressed_cb(self, keyboard, keycode):
-        if not self.__process_virtual_key_event(keycode, 0):
-            pass
-            # self.__virtkey.press_keycode(keycode)
+        if self.__process_virtual_key_event(keycode, 0):
+            return
+        if self.__keyboard_mode == KEYBOARD_MODE_US:
+            self.__virtkey.press_keycode(keycode)
 
     def __virtual_key_released_cb(self, keyboard, keycode):
-        if not self.__process_virtual_key_event(keycode, modifier.RELEASE_MASK):
-            pass
-        # self.__virtkey.release_keycode(keycode)
+        if self.__process_virtual_key_event(keycode, modifier.RELEASE_MASK):
+            return
+        if self.__keyboard_mode == KEYBOARD_MODE_US:
+            self.__virtkey.release_keycode(keycode)
 
     def __init_keyboard(self):
         keyboard_xml = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
