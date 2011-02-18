@@ -602,4 +602,7 @@ class Engine(ibus.EngineBase):
             if prop_name == 'setup':
                 self.__start_setup()
             elif prop_name == 'keyboard':
-                self.__keyboard.show()
+                if self.__keyboard.get_visible():
+                    self.__keyboard.hide()
+                else:
+                    self.__keyboard.show()
