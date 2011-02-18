@@ -705,13 +705,14 @@ class Engine(ibus.EngineBase):
                 self.__update_input_mode()
         elif prop_name.startswith('KeyboardMode'):
             if state == ibus.PROP_STATE_CHECKED:
-                keyboard_mode = self.__prop_name_keyboard_modes[prop_name]
-                if keyboard_mode == KEYBOARD_MODE_NONE:
+                self.__keyboard_mode = \
+                    self.__prop_name_keyboard_modes[prop_name]
+                if self.__keyboard_mode == KEYBOARD_MODE_NONE:
                     self.__keyboard.hide()
-                elif keyboard_mode == KEYBOARD_MODE_US:
+                elif self.__keyboard_mode == KEYBOARD_MODE_US:
                     self.__keyboard.set_group(0)
                     self.__keyboard.show()
-                elif keyboard_mode == KEYBOARD_MODE_KANA:
+                elif self.__keyboard_mode == KEYBOARD_MODE_KANA:
                     self.__keyboard.set_group(1)
                     self.__keyboard.show()
         else:
