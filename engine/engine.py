@@ -33,6 +33,7 @@ except ImportError:
     clipboard_get = lambda a : None
 try:
     from gi.repository import Eekboard, Eek, Gio, GLib
+    import virtkey
     has_virtual_keyboard = True
 except ImportError:
     has_virtual_keyboard = False
@@ -62,7 +63,7 @@ class CandidateSelector(skk.CandidateSelector):
         if self.index() >= self.pagination_start:
             return True
         return False
-        
+    
     def next_candidate(self, move_over_pages=True):
         super(CandidateSelector, self).next_candidate(move_over_pages)
         if self.lookup_table_visible():
@@ -85,7 +86,7 @@ class CandidateSelector(skk.CandidateSelector):
 
     __emacsclient_paths = ('/usr/bin/emacsclient',
                            '/usr/local/bin/emacsclient')
-                     
+    
     def candidate(self):
         candidate = super(CandidateSelector, self).candidate()
         if candidate is None:
@@ -134,7 +135,7 @@ class Engine(ibus.EngineBase):
     __select_keys = [u'a', u's', u'd', u'f', u'j', u'k', u'l',
                      u'q', u'w', u'e', u'r', u'u', u'i', u'o',
                      u'z', u'x', u'c', u'v', u'm', u',', u'.']
-     
+    
     __input_mode_prop_names = {
         skk.INPUT_MODE_HIRAGANA : u"InputMode.Hiragana",
         skk.INPUT_MODE_KATAKANA : u"InputMode.Katakana",
@@ -314,9 +315,9 @@ class Engine(ibus.EngineBase):
                 except IndexError:
                     pass
         elif (self.__skk.dict_edit_level() > 0 or \
-                self.__skk.conv_state == skk.CONV_STATE_START) and \
-                (state & modifier.CONTROL_MASK) and \
-                unichr(keyval).lower() in (u'y', u'v'):
+                  self.__skk.conv_state == skk.CONV_STATE_START) and \
+                  (state & modifier.CONTROL_MASK) and \
+                  unichr(keyval).lower() in (u'y', u'v'):
             if unichr(keyval).lower() == u'y':
                 clipboard = clipboard_get ("PRIMARY")
             else:
@@ -556,20 +557,21 @@ class Engine(ibus.EngineBase):
 
     def __process_virtual_key_event(self, keycode, modifiers):
         key = self.__keyboard_description.find_key_by_keycode(keycode)
-        if key:
-            symbol = key.get_symbol()
-            if not symbol.is_modifier() and isinstance(symbol, Eek.Keysym):
-                modifiers |= self.__keyboard_description.get_modifiers()
-                print (modifiers,)
-                self.process_key_event(symbol.get_xkeysym(),
-                                       keycode,
-                                       modifiers)
+        if not key:
+            return False
+        symbol = key.get_symbol()
+        if symbol.is_modifier() or not isinstance(symbol, Eek.Keysym):
+            return False
+        modifiers |= self.__keyboard_description.get_modifiers()
+        return self.process_key_event(symbol.get_xkeysym(), keycode, modifiers)
 
     def __virtual_key_pressed_cb(self, keyboard, keycode):
-        self.__process_virtual_key_event(keycode, 0);
+        if not self.__process_virtual_key_event(keycode, 0):
+            self.__virtkey.press_keycode(keycode)
 
     def __virtual_key_released_cb(self, keyboard, keycode):
-        self.__process_virtual_key_event(keycode, modifier.RELEASE_MASK);
+        if not self.__process_virtual_key_event(keycode, modifier.RELEASE_MASK):
+            self.__virtkey.release_keycode(keycode)
 
     def __init_keyboard(self):
         keyboard_xml = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
@@ -588,6 +590,7 @@ class Engine(ibus.EngineBase):
                                 self.__virtual_key_pressed_cb)
         self.__keyboard.connect('key-released',
                                 self.__virtual_key_released_cb)
+        self.__virtkey = virtkey.virtkey()
 
     def property_activate(self, prop_name, state):
         # print "PropertyActivate(%s, %d)" % (prop_name, state)
