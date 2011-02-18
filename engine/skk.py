@@ -1112,6 +1112,9 @@ class Key(object):
     def is_nicola(self):
         return 'nicola' in self.__modifiers
 
+    def is_kana(self):
+        return 'kana' in self.__modifiers
+
     def is_lshift(self):
         return 'lshift' in self.__modifiers
 
@@ -1291,7 +1294,7 @@ class Context(object):
     def __rom_kana_key_is_acceptable(self, key):
         if self.__current_state().rom_kana_state is None:
             return False
-        if key.is_nicola():
+        if key.is_nicola() or key.is_kana():
             return False
         output, pending, tree = self.__current_state().rom_kana_state
         return len(pending) > 0 and \
@@ -1363,7 +1366,7 @@ class Context(object):
             # Ignore ctrl+key and non-ASCII characters.
             if key.is_ctrl() or \
                     str(key) in ('return', 'escape', 'backspace') or \
-                    (len(key.letter) == 1 and \
+                    (not key.is_kana() and len(key.letter) == 1 and \
                          (0x20 > ord(key.letter) or ord(key.letter) > 0x7E)):
                 return (False, u'')
 
@@ -1909,6 +1912,8 @@ elements will be "[[DictEdit]] かんが*え ", "▽", "かんが", "*え" .'''
     def __convert_kana(self, key, state):
         if key.is_nicola():
             return self.__convert_nicola_kana(key, state)
+        elif key.is_kana():
+            return self.__convert_kana_kana(key, state)
         else:
             return self.__convert_rom_kana(key.letter.lower(), state)
             
@@ -1958,6 +1963,13 @@ elements will be "[[DictEdit]] かんが*え ", "▽", "かんが", "*え" .'''
         if hiragana:
             katakana = hiragana_to_katakana(hiragana)
             output += self.__convert_kana_by_input_mode(katakana, hiragana)
+        return (output, pending, tree)
+
+    def __convert_kana_kana(self, key, state):
+        assert key.is_kana()
+        output, pending, tree = state
+        hiragana = katakana_to_hiragana(key.letter)
+        output += self.__convert_kana_by_input_mode(key.letter, hiragana)
         return (output, pending, tree)
 
     def __convert_kana_by_input_mode(self, katakana, hiragana):

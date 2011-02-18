@@ -42,9 +42,74 @@ from gettext import dgettext
 _  = lambda a : dgettext("ibus-skk", a)
 N_ = lambda a : a
 
-# Work-around for older IBus releases.
-if not hasattr(ibus, 'ORIENTATION_HORIZONTAL'):
-    ibus.ORIENTATION_HORIZONTAL = 0
+KEYBOARD_MODE_NONE, KEYBOARD_MODE_US, KEYBOARD_MODE_KANA = range(3)
+
+KEYSYM_TO_UNICHR = {
+  0x047e: u'\u203E',
+  0x04a1: u'\u3002',
+  0x04a2: u'\u300C',
+  0x04a3: u'\u300D',
+  0x04a4: u'\u3001',
+  0x04a5: u'\u30FB',
+  0x04a6: u'\u30F2',
+  0x04a7: u'\u30A1',
+  0x04a8: u'\u30A3',
+  0x04a9: u'\u30A5',
+  0x04aa: u'\u30A7',
+  0x04ab: u'\u30A9',
+  0x04ac: u'\u30E3',
+  0x04ad: u'\u30E5',
+  0x04ae: u'\u30E7',
+  0x04af: u'\u30C3',
+  0x04b0: u'\u30FC',
+  0x04b1: u'\u30A2',
+  0x04b2: u'\u30A4',
+  0x04b3: u'\u30A6',
+  0x04b4: u'\u30A8',
+  0x04b5: u'\u30AA',
+  0x04b6: u'\u30AB',
+  0x04b7: u'\u30AD',
+  0x04b8: u'\u30AF',
+  0x04b9: u'\u30B1',
+  0x04ba: u'\u30B3',
+  0x04bb: u'\u30B5',
+  0x04bc: u'\u30B7',
+  0x04bd: u'\u30B9',
+  0x04be: u'\u30BB',
+  0x04bf: u'\u30BD',
+  0x04c0: u'\u30BF',
+  0x04c1: u'\u30C1',
+  0x04c2: u'\u30C4',
+  0x04c3: u'\u30C6',
+  0x04c4: u'\u30C8',
+  0x04c5: u'\u30CA',
+  0x04c6: u'\u30CB',
+  0x04c7: u'\u30CC',
+  0x04c8: u'\u30CD',
+  0x04c9: u'\u30CE',
+  0x04ca: u'\u30CF',
+  0x04cb: u'\u30D2',
+  0x04cc: u'\u30D5',
+  0x04cd: u'\u30D8',
+  0x04ce: u'\u30DB',
+  0x04cf: u'\u30DE',
+  0x04d0: u'\u30DF',
+  0x04d1: u'\u30E0',
+  0x04d2: u'\u30E1',
+  0x04d3: u'\u30E2',
+  0x04d4: u'\u30E4',
+  0x04d5: u'\u30E6',
+  0x04d6: u'\u30E8',
+  0x04d7: u'\u30E9',
+  0x04d8: u'\u30EA',
+  0x04d9: u'\u30EB',
+  0x04da: u'\u30EC',
+  0x04db: u'\u30ED',
+  0x04dc: u'\u30EF',
+  0x04dd: u'\u30F3',
+  0x04de: u'\u309B',
+  0x04df: u'\u309C'
+}
 
 class CandidateSelector(skk.CandidateSelector):
     def __init__(self, lookup_table, keys, page_size, pagination_start):
@@ -156,6 +221,16 @@ class Engine(ibus.EngineBase):
         skk.INPUT_MODE_HANKAKU_KATAKANA : u"_ｱ"
         }
 
+    __keyboard_mode_prop_names = {
+        KEYBOARD_MODE_NONE : u"KeyboardMode.None",
+        KEYBOARD_MODE_US : u"KeyboardMode.US",
+        KEYBOARD_MODE_KANA : u"KeyboardMode.Kana"
+        }
+
+    __prop_name_keyboard_modes = dict()
+    for key, val in __keyboard_mode_prop_names.items():
+        __prop_name_keyboard_modes[val] = key
+
     def __init__(self, bus, object_path):
         super(Engine, self).__init__(bus, object_path)
         self.__is_invalidate = False
@@ -194,6 +269,7 @@ class Engine(ibus.EngineBase):
         self.__skk.custom_rom_kana_rule = \
             self.config.get_value('custom_rom_kana_rule')
 
+        self.__keyboard_mode = KEYBOARD_MODE_NONE
         if has_virtual_keyboard:
             self.__init_keyboard()
         else:
@@ -247,9 +323,27 @@ class Engine(ibus.EngineBase):
         skk_props.append(input_mode_prop)
 
         if has_virtual_keyboard:
-            skk_props.append(ibus.Property(key=u"keyboard",
-                                           icon=u"input-keyboard",
-                                           tooltip=_(u"Launch on-screen keyboard")))
+            keyboard_mode_prop = ibus.Property(key=u"Keyboard",
+                                               type=ibus.PROP_TYPE_MENU,
+                                               icon=u"input-keyboard",
+                                               tooltip=_(u"Launch on-screen keyboard"))
+            props = ibus.PropList()
+            props.append(ibus.Property(key=u"KeyboardMode.None",
+                                       type=ibus.PROP_TYPE_RADIO,
+                                       label=_(u"None")))
+            props.append(ibus.Property(key=u"KeyboardMode.US",
+                                       type=ibus.PROP_TYPE_RADIO,
+                                       label=_(u"US Keyboard")))
+            props.append(ibus.Property(key=u"KeyboardMode.Kana",
+                                       type=ibus.PROP_TYPE_RADIO,
+                                       label=_(u"Kana Keyboard")))
+
+            props[self.__keyboard_mode].set_state(ibus.PROP_STATE_CHECKED)
+            for prop in props:
+                self.__prop_dict[prop.key] = prop
+            
+            keyboard_mode_prop.set_sub_props(props)
+            skk_props.append(keyboard_mode_prop)
 
         skk_props.append(ibus.Property(key=u"setup",
                                        tooltip=_(u"Configure SKK")))
@@ -339,10 +433,16 @@ class Engine(ibus.EngineBase):
             keychr = u'rshift'
         else:
             keychr = unichr(keyval)
-            if 0x20 > ord(keychr) or ord(keychr) > 0x7E:
+            if keyval in KEYSYM_TO_UNICHR:
+                keychr = KEYSYM_TO_UNICHR[keyval]
+                if 0x30A0 > ord(keychr) or ord(keychr) > 0x30FF:
+                    return len(self.__skk.preedit) > 0
+                keychr = u'kana+' + keychr
+            elif 0x20 > ord(keychr) or ord(keychr) > 0x7E:
                 # If the pre-edit buffer is visible, always handle key events:
                 # http://github.com/ueno/ibus-skk/issues/#issue/5
                 return len(self.__skk.preedit) > 0
+
         if state & modifier.CONTROL_MASK:
             # Some systems return 'J' if ctrl:nocaps xkb option is
             # enabled and the user press CapsLock + 'j':
@@ -567,11 +667,13 @@ class Engine(ibus.EngineBase):
 
     def __virtual_key_pressed_cb(self, keyboard, keycode):
         if not self.__process_virtual_key_event(keycode, 0):
-            self.__virtkey.press_keycode(keycode)
+            pass
+            # self.__virtkey.press_keycode(keycode)
 
     def __virtual_key_released_cb(self, keyboard, keycode):
         if not self.__process_virtual_key_event(keycode, modifier.RELEASE_MASK):
-            self.__virtkey.release_keycode(keycode)
+            pass
+        # self.__virtkey.release_keycode(keycode)
 
     def __init_keyboard(self):
         keyboard_xml = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
@@ -594,15 +696,22 @@ class Engine(ibus.EngineBase):
 
     def property_activate(self, prop_name, state):
         # print "PropertyActivate(%s, %d)" % (prop_name, state)
-        if state == ibus.PROP_STATE_CHECKED:
-            input_mode = self.__prop_name_input_modes[prop_name]
-            self.__skk.activate_input_mode(input_mode)
-            self.__update_input_mode()
+        if prop_name.startswith('InputMode'):
+            if state == ibus.PROP_STATE_CHECKED:
+                input_mode = self.__prop_name_input_modes[prop_name]
+                self.__skk.activate_input_mode(input_mode)
+                self.__update_input_mode()
+        elif prop_name.startswith('KeyboardMode'):
+            if state == ibus.PROP_STATE_CHECKED:
+                keyboard_mode = self.__prop_name_keyboard_modes[prop_name]
+                if keyboard_mode == KEYBOARD_MODE_NONE:
+                    self.__keyboard.hide()
+                elif keyboard_mode == KEYBOARD_MODE_US:
+                    self.__keyboard.set_group(0)
+                    self.__keyboard.show()
+                elif keyboard_mode == KEYBOARD_MODE_KANA:
+                    self.__keyboard.set_group(1)
+                    self.__keyboard.show()
         else:
             if prop_name == 'setup':
                 self.__start_setup()
-            elif prop_name == 'keyboard':
-                if self.__keyboard.get_visible():
-                    self.__keyboard.hide()
-                else:
-                    self.__keyboard.show()
