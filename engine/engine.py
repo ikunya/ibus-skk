@@ -273,7 +273,8 @@ class Engine(ibus.EngineBase):
         if has_virtual_keyboard:
             self.__init_keyboard()
         else:
-            self.__keyboard = None
+            self.__eekboard_server = None
+            self.__eekboard_context = None
 
         self.__skk.reset()
         self.__skk.activate_input_mode(self.__initial_input_mode)
@@ -642,6 +643,8 @@ class Engine(ibus.EngineBase):
             self.__skk.activate_input_mode(self.__suspended_mode)
             self.__suspended_mode = None
         self.__update_input_mode()
+        if has_virtual_keyboard:
+            self.__eekboard_server.push_context(self.__eekboard_context, None)
 
     def focus_out(self):
         self.__suspended_mode = self.__skk.input_mode
@@ -650,46 +653,46 @@ class Engine(ibus.EngineBase):
         self.__lookup_table.clean()
         self.__update()
         self.reset()
+        if has_virtual_keyboard:
+            self.__eekboard_server.pop_context(None)
 
     def reset(self):
         self.__skk.reset()
         self.__skk.activate_input_mode(self.__initial_input_mode)
 
-    def __process_virtual_key_event(self, keycode, modifiers):
-        key = self.__keyboard_description.find_key_by_keycode(keycode)
-        if not key:
-            return False
+    def __process_virtual_key_event(self, key, modifiers):
         symbol = key.get_symbol()
         if symbol.is_modifier() or not isinstance(symbol, Eek.Keysym):
             return False
-        modifiers |= self.__keyboard_description.get_modifiers()
-        return self.process_key_event(symbol.get_xkeysym(), keycode, modifiers)
+        modifiers |= self.__keyboard.get_modifiers()
+        return self.process_key_event(symbol.get_xkeysym(), key.get_keycode(), modifiers)
 
-    def __virtual_key_pressed_cb(self, keyboard, keycode):
-        if self.__process_virtual_key_event(keycode, 0):
+    def __virtual_key_pressed_cb(self, keyboard, key):
+        if self.__process_virtual_key_event(key, 0):
             return
         if self.__keyboard_mode == KEYBOARD_MODE_US:
-            self.__virtkey.press_keycode(keycode)
+            self.__virtkey.press_keycode(key.get_keycode())
 
-    def __virtual_key_released_cb(self, keyboard, keycode):
-        if self.__process_virtual_key_event(keycode, modifier.RELEASE_MASK):
+    def __virtual_key_released_cb(self, keyboard, key):
+        if self.__process_virtual_key_event(key, modifier.RELEASE_MASK):
             return
         if self.__keyboard_mode == KEYBOARD_MODE_US:
-            self.__virtkey.release_keycode(keycode)
+            self.__virtkey.release_keycode(key.get_keycode())
 
     def __init_keyboard(self):
+        # load keyboard from an XML file
         keyboard_xml = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
                                     'engine',
                                     'keyboard.xml')
         keyboard_file = Gio.file_new_for_path(keyboard_xml)
         layout = Eek.XmlLayout.new(keyboard_file.read())
-        self.__keyboard_description = Eek.Keyboard.new(layout, 640, 480)
-        self.__keyboard_description.set_modifier_behavior(Eek.ModifierBehavior.LATCH)
-        self.__session = Gio.bus_get_sync(Gio.BusType.SESSION, None)
-        self.__keyboard = Eekboard.Keyboard.new("/com/redhat/eekboard/Keyboard",
-                                                self.__session,
-                                                None)
-        self.__keyboard.set_description(self.__keyboard_description)
+        self.__keyboard = Eek.Keyboard.new(layout, 640, 480)
+        self.__keyboard.set_modifier_behavior(Eek.ModifierBehavior.LATCH)
+        # set the keyboard
+        connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+        self.__eekboard_server = Eekboard.Server.new(connection, None);
+        self.__eekboard_context = self.__eekboard_server.create_context("ibus-skk", None)
+        self.__eekboard_context.set_keyboard(self.__keyboard, None)
         self.__keyboard.connect('key-pressed',
                                 self.__virtual_key_pressed_cb)
         self.__keyboard.connect('key-released',
@@ -708,13 +711,13 @@ class Engine(ibus.EngineBase):
                 self.__keyboard_mode = \
                     self.__prop_name_keyboard_modes[prop_name]
                 if self.__keyboard_mode == KEYBOARD_MODE_NONE:
-                    self.__keyboard.hide()
+                    self.__eekboard_context.hide_keyboard(None)
                 elif self.__keyboard_mode == KEYBOARD_MODE_US:
-                    self.__keyboard.set_group(0)
-                    self.__keyboard.show()
+                    self.__eekboard_context.set_group(0, None)
+                    self.__eekboard_context.show_keyboard(None)
                 elif self.__keyboard_mode == KEYBOARD_MODE_KANA:
-                    self.__keyboard.set_group(1)
-                    self.__keyboard.show()
+                    self.__eekboard_context.set_group(1, None)
+                    self.__eekboard_context.show_keyboard(None)
         else:
             if prop_name == 'setup':
                 self.__start_setup()
