@@ -32,8 +32,7 @@ try:
 except ImportError:
     clipboard_get = lambda a : None
 try:
-    from gi.repository import Eekboard, Eek, Gio, GLib
-    import virtkey
+    import eekboard, virtkey
     has_virtual_keyboard = True
 except ImportError:
     has_virtual_keyboard = False
@@ -273,7 +272,7 @@ class Engine(ibus.EngineBase):
         if has_virtual_keyboard:
             self.__init_keyboard()
         else:
-            self.__eekboard_server = None
+            self.__eekboard_eekboard = None
             self.__eekboard_context = None
 
         self.__skk.reset()
@@ -326,7 +325,7 @@ class Engine(ibus.EngineBase):
         if has_virtual_keyboard:
             keyboard_mode_prop = ibus.Property(key=u"Keyboard",
                                                type=ibus.PROP_TYPE_MENU,
-                                               icon=u"input-keyboard",
+                                               icon=u"eekboard",
                                                tooltip=_(u"Launch on-screen keyboard"))
             props = ibus.PropList()
             props.append(ibus.Property(key=u"KeyboardMode.None",
@@ -644,7 +643,7 @@ class Engine(ibus.EngineBase):
             self.__suspended_mode = None
         self.__update_input_mode()
         if has_virtual_keyboard:
-            self.__eekboard_server.push_context(self.__eekboard_context, None)
+            self.__eekboard_eekboard.push_context(self.__eekboard_context)
 
     def focus_out(self):
         self.__suspended_mode = self.__skk.input_mode
@@ -654,7 +653,7 @@ class Engine(ibus.EngineBase):
         self.__update()
         self.reset()
         if has_virtual_keyboard:
-            self.__eekboard_server.pop_context(None)
+            self.__eekboard_eekboard.pop_context()
 
     def reset(self):
         self.__skk.reset()
@@ -662,7 +661,7 @@ class Engine(ibus.EngineBase):
 
     def __process_virtual_key_event(self, key, modifiers):
         symbol = key.get_symbol()
-        if symbol.is_modifier() or not isinstance(symbol, Eek.Keysym):
+        if symbol.is_modifier() or not isinstance(symbol, eekboard.Keysym):
             return False
         modifiers |= self.__keyboard.get_modifiers()
         return self.process_key_event(symbol.get_xkeysym(), key.get_keycode(), modifiers)
@@ -680,23 +679,18 @@ class Engine(ibus.EngineBase):
             self.__virtkey.release_keycode(key.get_keycode())
 
     def __init_keyboard(self):
-        # load keyboard from an XML file
-        keyboard_xml = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
-                                    'engine',
-                                    'keyboard.xml')
-        keyboard_file = Gio.file_new_for_path(keyboard_xml)
-        layout = Eek.XmlLayout.new(keyboard_file.read())
-        self.__keyboard = Eek.Keyboard.new(layout, 640, 480)
-        self.__keyboard.set_modifier_behavior(Eek.ModifierBehavior.LATCH)
-        # set the keyboard
-        connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
-        self.__eekboard_server = Eekboard.Server.new(connection, None);
-        self.__eekboard_context = self.__eekboard_server.create_context("ibus-skk", None)
-        self.__eekboard_context.set_keyboard(self.__keyboard, None)
-        self.__keyboard.connect('key-pressed',
-                                self.__virtual_key_pressed_cb)
-        self.__keyboard.connect('key-released',
-                                self.__virtual_key_released_cb)
+        path = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
+                            'engine', 'keyboard.xml')
+        self.__eekboard_keyboard = \
+            eekboard.XmlKeyboard(path, eekboard.MODIFIER_BEHAVIOR_LATCH)
+        self.__eekboard_keyboard.connect('key-pressed',
+                                         self.__virtual_key_pressed_cb)
+        self.__eekboard_keyboard.connect('key-released',
+                                         self.__virtual_key_released_cb)
+        self.__eekboard_eekboard = eekboard.Eekboard()
+        self.__eekboard_context = \
+            self.__eekboard_eekboard.create_context("ibus-skk")
+        self.__eekboard_context.set_keyboard(self.__eekboard_keyboard)
         self.__virtkey = virtkey.virtkey()
 
     def property_activate(self, prop_name, state):
@@ -711,13 +705,13 @@ class Engine(ibus.EngineBase):
                 self.__keyboard_mode = \
                     self.__prop_name_keyboard_modes[prop_name]
                 if self.__keyboard_mode == KEYBOARD_MODE_NONE:
-                    self.__eekboard_context.hide_keyboard(None)
+                    self.__eekboard_context.hide_keyboard()
                 elif self.__keyboard_mode == KEYBOARD_MODE_US:
-                    self.__eekboard_context.set_group(0, None)
-                    self.__eekboard_context.show_keyboard(None)
+                    self.__eekboard_context.set_group(0)
+                    self.__eekboard_context.show_keyboard()
                 elif self.__keyboard_mode == KEYBOARD_MODE_KANA:
-                    self.__eekboard_context.set_group(1, None)
-                    self.__eekboard_context.show_keyboard(None)
+                    self.__eekboard_context.set_group(1)
+                    self.__eekboard_context.show_keyboard()
         else:
             if prop_name == 'setup':
                 self.__start_setup()
