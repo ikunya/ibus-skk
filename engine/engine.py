@@ -663,7 +663,7 @@ class Engine(ibus.EngineBase):
         symbol = key.get_symbol()
         if symbol.is_modifier() or not isinstance(symbol, eekboard.Keysym):
             return False
-        modifiers |= self.__keyboard.get_modifiers()
+        modifiers |= self.__eekboard_keyboard.get_modifiers()
         return self.process_key_event(symbol.get_xkeysym(), key.get_keycode(), modifiers)
 
     def __virtual_key_pressed_cb(self, keyboard, key):
