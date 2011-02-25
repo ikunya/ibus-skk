@@ -43,7 +43,7 @@ N_ = lambda a : a
 
 KEYBOARD_MODE_NONE, KEYBOARD_MODE_US, KEYBOARD_MODE_KANA = range(3)
 
-KEYSYM_TO_UNICHR = {
+KANA_KEYSYM_TO_UNICHR = {
   0x047e: u'\u203E',
   0x04a1: u'\u3002',
   0x04a2: u'\u300C',
@@ -220,16 +220,6 @@ class Engine(ibus.EngineBase):
         skk.INPUT_MODE_HANKAKU_KATAKANA : u"_ｱ"
         }
 
-    __keyboard_mode_prop_names = {
-        KEYBOARD_MODE_NONE : u"KeyboardMode.None",
-        KEYBOARD_MODE_US : u"KeyboardMode.US",
-        KEYBOARD_MODE_KANA : u"KeyboardMode.Kana"
-        }
-
-    __prop_name_keyboard_modes = dict()
-    for key, val in __keyboard_mode_prop_names.items():
-        __prop_name_keyboard_modes[val] = key
-
     def __init__(self, bus, object_path):
         super(Engine, self).__init__(bus, object_path)
         self.__is_invalidate = False
@@ -269,11 +259,8 @@ class Engine(ibus.EngineBase):
             self.config.get_value('custom_rom_kana_rule')
 
         self.__keyboard_mode = KEYBOARD_MODE_NONE
-        if has_virtual_keyboard:
-            self.__init_keyboard()
-        else:
-            self.__eekboard_eekboard = None
-            self.__eekboard_context = None
+        self.__eekboard_eekboard = None
+        self.__eekboard_context = None
 
         self.__skk.reset()
         self.__skk.activate_input_mode(self.__initial_input_mode)
@@ -314,7 +301,7 @@ class Engine(ibus.EngineBase):
                                    type=ibus.PROP_TYPE_RADIO,
                                    label=_(u"HankakuKatakana")))
 
-        props[self.__skk.input_mode].set_state(ibus.PROP_STATE_CHECKED)
+        props[self.__skk.input_mode - 1].set_state(ibus.PROP_STATE_CHECKED)
 
         for prop in props:
             self.__prop_dict[prop.key] = prop
@@ -323,31 +310,14 @@ class Engine(ibus.EngineBase):
         skk_props.append(input_mode_prop)
 
         if has_virtual_keyboard:
-            keyboard_mode_prop = ibus.Property(key=u"Keyboard",
-                                               type=ibus.PROP_TYPE_MENU,
-                                               icon=u"eekboard",
-                                               tooltip=_(u"Launch on-screen keyboard"))
-            props = ibus.PropList()
-            props.append(ibus.Property(key=u"KeyboardMode.None",
-                                       type=ibus.PROP_TYPE_RADIO,
-                                       label=_(u"None")))
-            props.append(ibus.Property(key=u"KeyboardMode.US",
-                                       type=ibus.PROP_TYPE_RADIO,
-                                       label=_(u"US Keyboard")))
-            props.append(ibus.Property(key=u"KeyboardMode.Kana",
-                                       type=ibus.PROP_TYPE_RADIO,
-                                       label=_(u"Kana Keyboard")))
-
-            props[self.__keyboard_mode].set_state(ibus.PROP_STATE_CHECKED)
-            for prop in props:
-                self.__prop_dict[prop.key] = prop
-            
-            keyboard_mode_prop.set_sub_props(props)
-            skk_props.append(keyboard_mode_prop)
+            keyboard_prop = ibus.Property(key=u"Keyboard",
+                                          icon=u"eekboard",
+                                          tooltip=_(u"Launch on-screen keyboard"))
+            skk_props.append(keyboard_prop)
 
         skk_props.append(ibus.Property(key=u"setup",
                                        tooltip=_(u"Configure SKK")))
-
+        
         return skk_props
 
     def __update_input_mode(self):
@@ -360,7 +330,30 @@ class Engine(ibus.EngineBase):
         prop = self.__prop_dict[u"InputMode"]
         prop.label = self.__input_mode_labels[self.__input_mode]
         self.update_property(prop)
+        if has_virtual_keyboard:
+            if self.__keyboard_mode == KEYBOARD_MODE_KANA:
+                if self.__input_mode == skk.INPUT_MODE_KATAKANA:
+                    self.__eekboard_context.set_group(1)
+                else:
+                    self.__eekboard_context.set_group(2)
         self.__invalidate()
+
+    def __activate_keyboard_mode(self, keyboard_mode):
+        self.__keyboard_mode = keyboard_mode
+        if not self.__eekboard_context:
+            self.__init_keyboard()
+            self.__eekboard_eekboard.push_context(self.__eekboard_context)
+        if self.__keyboard_mode == KEYBOARD_MODE_NONE:
+            self.__eekboard_context.hide_keyboard()
+        elif self.__keyboard_mode == KEYBOARD_MODE_US:
+            self.__eekboard_context.set_group(0)
+            self.__eekboard_context.show_keyboard()
+        elif self.__keyboard_mode == KEYBOARD_MODE_KANA:
+            if self.__input_mode == skk.INPUT_MODE_KATAKANA:
+                self.__eekboard_context.set_group(1)
+            else:
+                self.__eekboard_context.set_group(2)
+                self.__eekboard_context.show_keyboard()
 
     def __get_clipboard(self, clipboard, text, data):
         clipboard_text = clipboard.wait_for_text()
@@ -433,8 +426,8 @@ class Engine(ibus.EngineBase):
             keychr = u'rshift'
         else:
             keychr = unichr(keyval)
-            if keyval in KEYSYM_TO_UNICHR:
-                keychr = KEYSYM_TO_UNICHR[keyval]
+            if keyval in KANA_KEYSYM_TO_UNICHR:
+                keychr = KANA_KEYSYM_TO_UNICHR[keyval]
                 if 0x30A0 > ord(keychr) or ord(keychr) > 0x30FF:
                     return len(self.__skk.preedit) > 0
                 keychr = u'kana+' + keychr
@@ -663,20 +656,32 @@ class Engine(ibus.EngineBase):
         symbol = key.get_symbol()
         if symbol.is_modifier() or not isinstance(symbol, eekboard.Keysym):
             return False
+
+        # handle special keys
+        if modifiers == 0:
+            if symbol.get_xkeysym() == keysyms.Eisu_toggle:
+                self.__activate_keyboard_mode(KEYBOARD_MODE_US)
+                return True
+            elif symbol.get_xkeysym() == keysyms.Hiragana_Katakana:
+                self.__activate_keyboard_mode(KEYBOARD_MODE_KANA)
+                return True
+                
         modifiers |= self.__eekboard_keyboard.get_modifiers()
-        return self.process_key_event(symbol.get_xkeysym(), key.get_keycode(), modifiers)
+        if self.process_key_event(symbol.get_xkeysym(), \
+                                      key.get_keycode(), \
+                                      modifiers):
+            return True
+        elif symbol.get_xkeysym() not in KANA_KEYSYM_TO_UNICHR:
+            if modifiers & modifier.RELEASE_MASK:
+                self.__virtkey.release_keycode(key.get_keycode())
+            else:
+                self.__virtkey.press_keycode(key.get_keycode())
 
     def __virtual_key_pressed_cb(self, keyboard, key):
-        if self.__process_virtual_key_event(key, 0):
-            return
-        if self.__keyboard_mode == KEYBOARD_MODE_US:
-            self.__virtkey.press_keycode(key.get_keycode())
+        return self.__process_virtual_key_event(key, 0)
 
     def __virtual_key_released_cb(self, keyboard, key):
-        if self.__process_virtual_key_event(key, modifier.RELEASE_MASK):
-            return
-        if self.__keyboard_mode == KEYBOARD_MODE_US:
-            self.__virtkey.release_keycode(key.get_keycode())
+        return self.__process_virtual_key_event(key, modifier.RELEASE_MASK)
 
     def __init_keyboard(self):
         path = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
@@ -694,24 +699,18 @@ class Engine(ibus.EngineBase):
         self.__virtkey = virtkey.virtkey()
 
     def property_activate(self, prop_name, state):
-        # print "PropertyActivate(%s, %d)" % (prop_name, state)
+        print "PropertyActivate(%s, %d)" % (prop_name, state)
         if prop_name.startswith('InputMode'):
             if state == ibus.PROP_STATE_CHECKED:
                 input_mode = self.__prop_name_input_modes[prop_name]
                 self.__skk.activate_input_mode(input_mode)
                 self.__update_input_mode()
-        elif prop_name.startswith('KeyboardMode'):
-            if state == ibus.PROP_STATE_CHECKED:
-                self.__keyboard_mode = \
-                    self.__prop_name_keyboard_modes[prop_name]
-                if self.__keyboard_mode == KEYBOARD_MODE_NONE:
-                    self.__eekboard_context.hide_keyboard()
-                elif self.__keyboard_mode == KEYBOARD_MODE_US:
-                    self.__eekboard_context.set_group(0)
-                    self.__eekboard_context.show_keyboard()
-                elif self.__keyboard_mode == KEYBOARD_MODE_KANA:
-                    self.__eekboard_context.set_group(1)
-                    self.__eekboard_context.show_keyboard()
+        elif prop_name == 'Keyboard':
+            if self.__keyboard_mode == KEYBOARD_MODE_NONE:
+                keyboard_mode = KEYBOARD_MODE_US
+            else:
+                keyboard_mode = KEYBOARD_MODE_NONE
+            self.__activate_keyboard_mode(keyboard_mode)
         else:
             if prop_name == 'setup':
                 self.__start_setup()
