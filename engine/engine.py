@@ -699,7 +699,7 @@ class Engine(ibus.EngineBase):
         self.__virtkey = virtkey.virtkey()
 
     def property_activate(self, prop_name, state):
-        print "PropertyActivate(%s, %d)" % (prop_name, state)
+        # print "PropertyActivate(%s, %d)" % (prop_name, state)
         if prop_name.startswith('InputMode'):
             if state == ibus.PROP_STATE_CHECKED:
                 input_mode = self.__prop_name_input_modes[prop_name]
