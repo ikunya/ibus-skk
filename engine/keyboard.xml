@@ -42,11 +42,11 @@
             <bounds>2.000000,104.000000,36.000000,24.000000</bounds>
             <oref>outline9</oref>
             <symbols groups="3" levels="2">
-                <keysym keyval="65319" label="日">Hiragana_Katakana</keysym>
+                <keysym keyval="65319" label="あいう">Hiragana_Katakana</keysym>
                 <keysym></keysym>
-                <keysym keyval="65328">Eisu_toggle</keysym>
+                <keysym keyval="65328" label="ABC">Eisu_toggle</keysym>
                 <keysym></keysym>
-                <keysym keyval="65328">Eisu_toggle</keysym>
+                <keysym keyval="65328" label="ABC">Eisu_toggle</keysym>
                 <keysym></keysym>
             </symbols>
         </key>
@@ -63,10 +63,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="47">slash</keysym>
                 <keysym keyval="63">question</keysym>
-                <keysym keyval="1234">kana_ME</keysym>
-                <keysym keyval="1189">kana_middledot</keysym>
-                <keysym keyval="1234" label="め">kana_ME</keysym>
-                <keysym keyval="1189">kana_middledot</keysym>
+                <keysym keyval="47" label="メ">slash</keysym>
+                <keysym keyval="63" label="・">question</keysym>
+                <keysym keyval="47" label="め">slash</keysym>
+                <keysym keyval="63" label="・">question</keysym>
             </symbols>
         </key>
         <key id="keycode60" name="AB09" column="9" row="3">
@@ -75,10 +75,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="46">period</keysym>
                 <keysym keyval="62">greater</keysym>
-                <keysym keyval="1241">kana_RU</keysym>
-                <keysym keyval="1185">kana_fullstop</keysym>
-                <keysym keyval="1241" label="る">kana_RU</keysym>
-                <keysym keyval="1185">kana_fullstop</keysym>
+                <keysym keyval="46" label="ル">period</keysym>
+                <keysym keyval="62" label="。">greater</keysym>
+                <keysym keyval="46" label="る">period</keysym>
+                <keysym keyval="62" label="。">greater</keysym>
             </symbols>
         </key>
         <key id="keycode59" name="AB08" column="8" row="3">
@@ -87,10 +87,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="44">comma</keysym>
                 <keysym keyval="60">less</keysym>
-                <keysym keyval="1224">kana_NE</keysym>
-                <keysym keyval="1188">kana_comma</keysym>
-                <keysym keyval="1224" label="ね">kana_NE</keysym>
-                <keysym keyval="1188">kana_comma</keysym>
+                <keysym keyval="44" label="ネ">comma</keysym>
+                <keysym keyval="60" label="、">less</keysym>
+                <keysym keyval="44" label="ね">comma</keysym>
+                <keysym keyval="60" label="、">less</keysym>
             </symbols>
         </key>
         <key id="keycode58" name="AB07" column="7" row="3">
@@ -99,10 +99,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="109">m</keysym>
                 <keysym keyval="77">M</keysym>
-                <keysym keyval="1235">kana_MO</keysym>
-                <keysym></keysym>
-                <keysym keyval="1235" label="も">kana_MO</keysym>
-                <keysym></keysym>
+                <keysym keyval="109" label="モ">m</keysym>
+                <keysym keyval="77" label="　">M</keysym>
+                <keysym keyval="109" label="も">m</keysym>
+                <keysym keyval="77" label="　">M</keysym>
             </symbols>
         </key>
         <key id="keycode57" name="AB06" column="6" row="3">
@@ -111,10 +111,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="110">n</keysym>
                 <keysym keyval="78">N</keysym>
-                <keysym keyval="1232">kana_MI</keysym>
-                <keysym></keysym>
-                <keysym keyval="1232" label="み">kana_MI</keysym>
-                <keysym></keysym>
+                <keysym keyval="110" label="ミ">n</keysym>
+                <keysym keyval="78" label="　">N</keysym>
+                <keysym keyval="110" label="み">n</keysym>
+                <keysym keyval="78" label="　">N</keysym>
             </symbols>
         </key>
         <key id="keycode56" name="AB05" column="5" row="3">
@@ -123,10 +123,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="98">b</keysym>
                 <keysym keyval="66">B</keysym>
-                <keysym keyval="1210">kana_KO</keysym>
-                <keysym></keysym>
-                <keysym keyval="1210" label="こ">kana_KO</keysym>
-                <keysym></keysym>
+                <keysym keyval="98" label="コ">b</keysym>
+                <keysym keyval="66" label="ゴ">B</keysym>
+                <keysym keyval="98" label="こ">b</keysym>
+                <keysym keyval="66" label="ご">B</keysym>
             </symbols>
         </key>
         <key id="keycode55" name="AB04" column="4" row="3">
@@ -135,10 +135,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="118">v</keysym>
                 <keysym keyval="86">V</keysym>
-                <keysym keyval="1227">kana_HI</keysym>
-                <keysym></keysym>
-                <keysym keyval="1227" label="ひ">kana_HI</keysym>
-                <keysym></keysym>
+                <keysym keyval="118" label="ヒ">v</keysym>
+                <keysym keyval="86" label="ビ">V</keysym>
+                <keysym keyval="118" label="ひ">v</keysym>
+                <keysym keyval="86" label="び">V</keysym>
             </symbols>
         </key>
         <key id="keycode54" name="AB03" column="3" row="3">
@@ -147,10 +147,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="99">c</keysym>
                 <keysym keyval="67">C</keysym>
-                <keysym keyval="1215">kana_SO</keysym>
-                <keysym></keysym>
-                <keysym keyval="1215" label="そ">kana_SO</keysym>
-                <keysym></keysym>
+                <keysym keyval="99" label="ソ">c</keysym>
+                <keysym keyval="67" label="ゾ">C</keysym>
+                <keysym keyval="99" label="そ">c</keysym>
+                <keysym keyval="67" label="ぞ">C</keysym>
             </symbols>
         </key>
         <key id="keycode53" name="AB02" column="2" row="3">
@@ -159,10 +159,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="120">x</keysym>
                 <keysym keyval="88">X</keysym>
-                <keysym keyval="1211">kana_SA</keysym>
-                <keysym></keysym>
-                <keysym keyval="1211" label="さ">kana_SA</keysym>
-                <keysym></keysym>
+                <keysym keyval="120" label="サ">x</keysym>
+                <keysym keyval="88" label="ザ">X</keysym>
+                <keysym keyval="120" label="さ">x</keysym>
+                <keysym keyval="88" label="ざ">X</keysym>
             </symbols>
         </key>
         <key id="keycode52" name="AB01" column="1" row="3">
@@ -171,10 +171,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="122">z</keysym>
                 <keysym keyval="90">Z</keysym>
-                <keysym keyval="1218">kana_TU</keysym>
-                <keysym keyval="1199">kana_tu</keysym>
-                <keysym keyval="1218" label="つ">kana_TU</keysym>
-                <keysym keyval="1199" label="っ">kana_tu</keysym>
+                <keysym keyval="122" label="ツ">z</keysym>
+                <keysym keyval="90" label="ッ">Z</keysym>
+                <keysym keyval="122" label="つ">z</keysym>
+                <keysym keyval="90" label="っ">Z</keysym>
             </symbols>
         </key>
         <key id="keycode50" name="LFSH" column="0" row="3">
@@ -197,10 +197,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="39">quoteright</keysym>
                 <keysym keyval="34">quotedbl</keysym>
-                <keysym keyval="1209">kana_KE</keysym>
-                <keysym></keysym>
-                <keysym keyval="1209" label="け">kana_KE</keysym>
-                <keysym></keysym>
+                <keysym keyval="39" label="ケ">quoteright</keysym>
+                <keysym keyval="34" label="ゲ">quotedbl</keysym>
+                <keysym keyval="39" label="け">quoteright</keysym>
+                <keysym keyval="34" label="げ">quotedbl</keysym>
             </symbols>
         </key>
         <key id="keycode47" name="AC10" column="10" row="2">
@@ -209,10 +209,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="59">semicolon</keysym>
                 <keysym keyval="58">colon</keysym>
-                <keysym keyval="1242">kana_RE</keysym>
-                <keysym></keysym>
-                <keysym keyval="1242" label="れ">kana_RE</keysym>
-                <keysym></keysym>
+                <keysym keyval="59" label="レ">semicolon</keysym>
+                <keysym keyval="58" label="ペ">colon</keysym>
+                <keysym keyval="59" label="れ">semicolon</keysym>
+                <keysym keyval="58" label="ぺ">colon</keysym>
             </symbols>
         </key>
         <key id="keycode46" name="AC09" column="9" row="2">
@@ -221,10 +221,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="108">l</keysym>
                 <keysym keyval="76">L</keysym>
-                <keysym keyval="1240">kana_RI</keysym>
-                <keysym></keysym>
-                <keysym keyval="1240" label="り">kana_RI</keysym>
-                <keysym></keysym>
+                <keysym keyval="108" label="リ">l</keysym>
+                <keysym keyval="76" label="　">L</keysym>
+                <keysym keyval="108" label="り">l</keysym>
+                <keysym keyval="76" label="　">L</keysym>
             </symbols>
         </key>
         <key id="keycode45" name="AC08" column="8" row="2">
@@ -233,10 +233,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="107">k</keysym>
                 <keysym keyval="75">K</keysym>
-                <keysym keyval="1225">kana_NO</keysym>
-                <keysym></keysym>
-                <keysym keyval="1225" label="の">kana_NO</keysym>
-                <keysym></keysym>
+                <keysym keyval="107" label="ノ">k</keysym>
+                <keysym keyval="75" label="ポ">K</keysym>
+                <keysym keyval="107" label="の">k</keysym>
+                <keysym keyval="75" label="ぽ">K</keysym>
             </symbols>
         </key>
         <key id="keycode44" name="AC07" column="7" row="2">
@@ -245,10 +245,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="106">j</keysym>
                 <keysym keyval="74">J</keysym>
-                <keysym keyval="1231">kana_MA</keysym>
-                <keysym></keysym>
-                <keysym keyval="1231" label="ま">kana_MA</keysym>
-                <keysym></keysym>
+                <keysym keyval="106" label="マ">j</keysym>
+                <keysym keyval="74" label="　">J</keysym>
+                <keysym keyval="106" label="ま">j</keysym>
+                <keysym keyval="74" label="　">J</keysym>
             </symbols>
         </key>
         <key id="keycode43" name="AC06" column="6" row="2">
@@ -257,10 +257,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="104">h</keysym>
                 <keysym keyval="72">H</keysym>
-                <keysym keyval="1208">kana_KU</keysym>
-                <keysym></keysym>
-                <keysym keyval="1208" label="く">kana_KU</keysym>
-                <keysym></keysym>
+                <keysym keyval="104" label="ク">h</keysym>
+                <keysym keyval="72" label="グ">H</keysym>
+                <keysym keyval="104" label="く">h</keysym>
+                <keysym keyval="72" label="ぐ">H</keysym>
             </symbols>
         </key>
         <key id="keycode42" name="AC05" column="5" row="2">
@@ -269,10 +269,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="103">g</keysym>
                 <keysym keyval="71">G</keysym>
-                <keysym keyval="1207">kana_KI</keysym>
-                <keysym></keysym>
-                <keysym keyval="1207" label="き">kana_KI</keysym>
-                <keysym></keysym>
+                <keysym keyval="103" label="キ">g</keysym>
+                <keysym keyval="71" label="ギ">G</keysym>
+                <keysym keyval="103" label="き">g</keysym>
+                <keysym keyval="71" label="ぎ">G</keysym>
             </symbols>
         </key>
         <key id="keycode41" name="AC04" column="4" row="2">
@@ -281,10 +281,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="102">f</keysym>
                 <keysym keyval="70">F</keysym>
-                <keysym keyval="1226">kana_HA</keysym>
-                <keysym></keysym>
-                <keysym keyval="1226" label="は">kana_HA</keysym>
-                <keysym></keysym>
+                <keysym keyval="102" label="ハ">f</keysym>
+                <keysym keyval="70" label="バ">F</keysym>
+                <keysym keyval="102" label="は">f</keysym>
+                <keysym keyval="70" label="ば">F</keysym>
             </symbols>
         </key>
         <key id="keycode40" name="AC03" column="3" row="2">
@@ -293,10 +293,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="100">d</keysym>
                 <keysym keyval="68">D</keysym>
-                <keysym keyval="1212">kana_SHI</keysym>
-                <keysym></keysym>
-                <keysym keyval="1212" label="し">kana_SHI</keysym>
-                <keysym></keysym>
+                <keysym keyval="100" label="シ">d</keysym>
+                <keysym keyval="68" label="ジ">D</keysym>
+                <keysym keyval="100" label="し">d</keysym>
+                <keysym keyval="68" label="じ">D</keysym>
             </symbols>
         </key>
         <key id="keycode39" name="AC02" column="2" row="2">
@@ -305,10 +305,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="115">s</keysym>
                 <keysym keyval="83">S</keysym>
-                <keysym keyval="1220">kana_TO</keysym>
-                <keysym></keysym>
-                <keysym keyval="1220" label="と">kana_TO</keysym>
-                <keysym></keysym>
+                <keysym keyval="115" label="ト">s</keysym>
+                <keysym keyval="83" label="ド">S</keysym>
+                <keysym keyval="115" label="と">s</keysym>
+                <keysym keyval="83" label="ど">S</keysym>
             </symbols>
         </key>
         <key id="keycode38" name="AC01" column="1" row="2">
@@ -317,10 +317,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="97">a</keysym>
                 <keysym keyval="65">A</keysym>
-                <keysym keyval="1217">kana_TI</keysym>
-                <keysym></keysym>
-                <keysym keyval="1217" label="ち">kana_TI</keysym>
-                <keysym></keysym>
+                <keysym keyval="97" label="チ">a</keysym>
+                <keysym keyval="65" label="ヂ">A</keysym>
+                <keysym keyval="97" label="ち">a</keysym>
+                <keysym keyval="65" label="ぢ">A</keysym>
             </symbols>
         </key>
         <key id="keycode66" name="CAPS" column="0" row="2">
@@ -336,10 +336,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="92">backslash</keysym>
                 <keysym keyval="124">bar</keysym>
-                <keysym keyval="1233">kana_MU</keysym>
-                <keysym keyval="1187">kana_closingbracket</keysym>
-                <keysym keyval="1233" label="む">kana_MU</keysym>
-                <keysym keyval="1187">kana_closingbracket</keysym>
+                <keysym keyval="92" label="ム">backslash</keysym>
+                <keysym keyval="124" label="」">bar</keysym>
+                <keysym keyval="92" label="む">backslash</keysym>
+                <keysym keyval="124" label="」">bar</keysym>
             </symbols>
         </key>
         <key id="keycode35" name="AD12" column="12" row="1">
@@ -348,10 +348,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="93">bracketright</keysym>
                 <keysym keyval="125">braceright</keysym>
-                <keysym keyval="1247">semivoicedsound</keysym>
-                <keysym keyval="1186">kana_openingbracket</keysym>
-                <keysym keyval="1247">semivoicedsound</keysym>
-                <keysym keyval="1186">kana_openingbracket</keysym>
+                <keysym keyval="93" label="゜">bracketright</keysym>
+                <keysym keyval="125" label="「">braceright</keysym>
+                <keysym keyval="93" label="゜">bracketright</keysym>
+                <keysym keyval="125" label="「">braceright</keysym>
             </symbols>
         </key>
         <key id="keycode34" name="AD11" column="11" row="1">
@@ -372,10 +372,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="112">p</keysym>
                 <keysym keyval="80">P</keysym>
-                <keysym keyval="1214">kana_SE</keysym>
-                <keysym></keysym>
-                <keysym keyval="1214" label="せ">kana_SE</keysym>
-                <keysym></keysym>
+                <keysym keyval="112" label="セ">p</keysym>
+                <keysym keyval="80" label="ゼ">P</keysym>
+                <keysym keyval="112" label="せ">p</keysym>
+                <keysym keyval="80" label="ぜ">P</keysym>
             </symbols>
         </key>
         <key id="keycode32" name="AD09" column="9" row="1">
@@ -384,10 +384,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="111">o</keysym>
                 <keysym keyval="79">O</keysym>
-                <keysym keyval="1239">kana_RA</keysym>
-                <keysym></keysym>
-                <keysym keyval="1239" label="ら">kana_RA</keysym>
-                <keysym></keysym>
+                <keysym keyval="111" label="ラ">o</keysym>
+                <keysym keyval="79" label="　">O</keysym>
+                <keysym keyval="111" label="ら">o</keysym>
+                <keysym keyval="79" label="　">O</keysym>
             </symbols>
         </key>
         <key id="keycode31" name="AD08" column="8" row="1">
@@ -396,10 +396,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="105">i</keysym>
                 <keysym keyval="73">I</keysym>
-                <keysym keyval="1222">kana_NI</keysym>
-                <keysym></keysym>
-                <keysym keyval="1222" label="に">kana_NI</keysym>
-                <keysym></keysym>
+                <keysym keyval="105" label="ニ">i</keysym>
+                <keysym keyval="73" label="ピ">I</keysym>
+                <keysym keyval="105" label="に">i</keysym>
+                <keysym keyval="73" label="ぴ">I</keysym>
             </symbols>
         </key>
         <key id="keycode30" name="AD07" column="7" row="1">
@@ -408,10 +408,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="117">u</keysym>
                 <keysym keyval="85">U</keysym>
-                <keysym keyval="1221">kana_NA</keysym>
-                <keysym></keysym>
-                <keysym keyval="1221" label="な">kana_NA</keysym>
-                <keysym></keysym>
+                <keysym keyval="117" label="ナ">u</keysym>
+                <keysym keyval="85" label="パ">U</keysym>
+                <keysym keyval="117" label="な">u</keysym>
+                <keysym keyval="85" label="ぱ">U</keysym>
             </symbols>
         </key>
         <key id="keycode29" name="AD06" column="6" row="1">
@@ -420,10 +420,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="121">y</keysym>
                 <keysym keyval="89">Y</keysym>
-                <keysym keyval="1245">kana_N</keysym>
-                <keysym></keysym>
-                <keysym keyval="1245" label="ん">kana_N</keysym>
-                <keysym></keysym>
+                <keysym keyval="121" label="ン">y</keysym>
+                <keysym keyval="89" label="　">Y</keysym>
+                <keysym keyval="121" label="ん">y</keysym>
+                <keysym keyval="89" label="　">Y</keysym>
             </symbols>
         </key>
         <key id="keycode28" name="AD05" column="5" row="1">
@@ -432,10 +432,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="116">t</keysym>
                 <keysym keyval="84">T</keysym>
-                <keysym keyval="1206">kana_KA</keysym>
-                <keysym></keysym>
-                <keysym keyval="1206" label="か">kana_KA</keysym>
-                <keysym></keysym>
+                <keysym keyval="116" label="カ">t</keysym>
+                <keysym keyval="84" label="ガ">T</keysym>
+                <keysym keyval="116" label="か">t</keysym>
+                <keysym keyval="84" label="が">T</keysym>
             </symbols>
         </key>
         <key id="keycode27" name="AD04" column="4" row="1">
@@ -444,10 +444,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="114">r</keysym>
                 <keysym keyval="82">R</keysym>
-                <keysym keyval="1213">kana_SU</keysym>
-                <keysym></keysym>
-                <keysym keyval="1213" label="す">kana_SU</keysym>
-                <keysym></keysym>
+                <keysym keyval="114" label="ス">r</keysym>
+                <keysym keyval="82" label="ズ">R</keysym>
+                <keysym keyval="114" label="す">r</keysym>
+                <keysym keyval="82" label="ず">R</keysym>
             </symbols>
         </key>
         <key id="keycode26" name="AD03" column="3" row="1">
@@ -456,10 +456,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="101">e</keysym>
                 <keysym keyval="69">E</keysym>
-                <keysym keyval="1202">kana_I</keysym>
-                <keysym keyval="1192">kana_i</keysym>
-                <keysym keyval="1202" label="い">kana_I</keysym>
-                <keysym keyval="1192" label="ぃ">kana_i</keysym>
+                <keysym keyval="101" label="イ">e</keysym>
+                <keysym keyval="69" label="ィ">E</keysym>
+                <keysym keyval="101" label="い">e</keysym>
+                <keysym keyval="69" label="ぃ">E</keysym>
             </symbols>
         </key>
         <key id="keycode25" name="AD02" column="2" row="1">
@@ -468,10 +468,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="119">w</keysym>
                 <keysym keyval="87">W</keysym>
-                <keysym keyval="1219">kana_TE</keysym>
-                <keysym></keysym>
-                <keysym keyval="1219" label="て">kana_TE</keysym>
-                <keysym></keysym>
+                <keysym keyval="119" label="テ">w</keysym>
+                <keysym keyval="87" label="デ">W</keysym>
+                <keysym keyval="119" label="て">w</keysym>
+                <keysym keyval="87" label="で">W</keysym>
             </symbols>
         </key>
         <key id="keycode24" name="AD01" column="1" row="1">
@@ -480,10 +480,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="113">q</keysym>
                 <keysym keyval="81">Q</keysym>
-                <keysym keyval="1216">kana_TA</keysym>
-                <keysym></keysym>
-                <keysym keyval="1216" label="た">kana_TA</keysym>
-                <keysym></keysym>
+                <keysym keyval="113" label="タ">q</keysym>
+                <keysym keyval="81" label="ダ">Q</keysym>
+                <keysym keyval="113" label="た">q</keysym>
+                <keysym keyval="81" label="だ">Q</keysym>
             </symbols>
         </key>
         <key id="keycode23" name="TAB" column="0" row="1">
@@ -507,10 +507,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="61">equal</keysym>
                 <keysym keyval="43">plus</keysym>
-                <keysym keyval="1229">kana_HE</keysym>
-                <keysym></keysym>
-                <keysym keyval="1229" label="へ">kana_HE</keysym>
-                <keysym></keysym>
+                <keysym keyval="61" label="ヘ">equal</keysym>
+                <keysym keyval="43" label="ベ">plus</keysym>
+                <keysym keyval="61" label="へ">equal</keysym>
+                <keysym keyval="43" label="べ">plus</keysym>
             </symbols>
         </key>
         <key id="keycode20" name="AE11" column="11" row="0">
@@ -519,10 +519,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="45">minus</keysym>
                 <keysym keyval="95">underscore</keysym>
-                <keysym keyval="1230">kana_HO</keysym>
-                <keysym></keysym>
-                <keysym keyval="1230" label="ほ">kana_HO</keysym>
-                <keysym></keysym>
+                <keysym keyval="45" label="ホ">minus</keysym>
+                <keysym keyval="95" label="ボ">underscore</keysym>
+                <keysym keyval="45" label="ほ">minus</keysym>
+                <keysym keyval="95" label="ぼ">underscore</keysym>
             </symbols>
         </key>
         <key id="keycode19" name="AE10" column="10" row="0">
@@ -531,10 +531,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="48">0</keysym>
                 <keysym keyval="41">parenright</keysym>
-                <keysym keyval="1244">kana_WA</keysym>
-                <keysym keyval="1190">kana_WO</keysym>
-                <keysym keyval="1244" label="わ">kana_WA</keysym>
-                <keysym keyval="1190" label="を">kana_WO</keysym>
+                <keysym keyval="48" label="ワ">0</keysym>
+                <keysym keyval="41" label="ヲ">parenright</keysym>
+                <keysym keyval="48" label="わ">0</keysym>
+                <keysym keyval="41" label="を">parenright</keysym>
             </symbols>
         </key>
         <key id="keycode18" name="AE09" column="9" row="0">
@@ -543,10 +543,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="57">9</keysym>
                 <keysym keyval="40">parenleft</keysym>
-                <keysym keyval="1238">kana_YO</keysym>
-                <keysym keyval="1198">kana_yo</keysym>
-                <keysym keyval="1238" label="よ">kana_YO</keysym>
-                <keysym keyval="1198" label="ょ">kana_yo</keysym>
+                <keysym keyval="57" label="ヨ">9</keysym>
+                <keysym keyval="40" label="ョ">parenleft</keysym>
+                <keysym keyval="57" label="よ">9</keysym>
+                <keysym keyval="40" label="ょ">parenleft</keysym>
             </symbols>
         </key>
         <key id="keycode17" name="AE08" column="8" row="0">
@@ -555,10 +555,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="56">8</keysym>
                 <keysym keyval="42">asterisk</keysym>
-                <keysym keyval="1237">kana_YU</keysym>
-                <keysym keyval="1197">kana_yu</keysym>
-                <keysym keyval="1237" label="ゆ">kana_YU</keysym>
-                <keysym keyval="1197" label="ゅ">kana_yu</keysym>
+                <keysym keyval="56" label="ユ">8</keysym>
+                <keysym keyval="42" label="ュ">asterisk</keysym>
+                <keysym keyval="56" label="ゆ">8</keysym>
+                <keysym keyval="42" label="ゅ">asterisk</keysym>
             </symbols>
         </key>
         <key id="keycode16" name="AE07" column="7" row="0">
@@ -567,10 +567,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="55">7</keysym>
                 <keysym keyval="38">ampersand</keysym>
-                <keysym keyval="1236">kana_YA</keysym>
-                <keysym keyval="1196">kana_ya</keysym>
-                <keysym keyval="1236" label="や">kana_YA</keysym>
-                <keysym keyval="1196" label="ゃ">kana_ya</keysym>
+                <keysym keyval="55" label="ヤ">7</keysym>
+                <keysym keyval="38" label="ャ">ampersand</keysym>
+                <keysym keyval="55" label="や">7</keysym>
+                <keysym keyval="38" label="ゃ">ampersand</keysym>
             </symbols>
         </key>
         <key id="keycode15" name="AE06" column="6" row="0">
@@ -579,10 +579,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="54">6</keysym>
                 <keysym keyval="94">asciicircum</keysym>
-                <keysym keyval="1205">kana_O</keysym>
-                <keysym keyval="1195">kana_o</keysym>
-                <keysym keyval="1205" label="お">kana_O</keysym>
-                <keysym keyval="1195" label="ぉ">kana_o</keysym>
+                <keysym keyval="54" label="オ">6</keysym>
+                <keysym keyval="94" label="ォ">asciicircum</keysym>
+                <keysym keyval="54" label="お">6</keysym>
+                <keysym keyval="94" label="ぉ">asciicircum</keysym>
             </symbols>
         </key>
         <key id="keycode14" name="AE05" column="5" row="0">
@@ -591,10 +591,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="53">5</keysym>
                 <keysym keyval="37">percent</keysym>
-                <keysym keyval="1204">kana_E</keysym>
-                <keysym keyval="1194">kana_e</keysym>
-                <keysym keyval="1204" label="え">kana_E</keysym>
-                <keysym keyval="1194" label="ぇ">kana_e</keysym>
+                <keysym keyval="53" label="エ">5</keysym>
+                <keysym keyval="37" label="ェ">percent</keysym>
+                <keysym keyval="53" label="え">5</keysym>
+                <keysym keyval="37" label="ぇ">percent</keysym>
             </symbols>
         </key>
         <key id="keycode13" name="AE04" column="4" row="0">
@@ -603,10 +603,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="52">4</keysym>
                 <keysym keyval="36">dollar</keysym>
-                <keysym keyval="1203">kana_U</keysym>
-                <keysym keyval="1193">kana_u</keysym>
-                <keysym keyval="1203" label="う">kana_U</keysym>
-                <keysym keyval="1193" label="ぅ">kana_u</keysym>
+                <keysym keyval="52" label="ウ">4</keysym>
+                <keysym keyval="36" label="ゥ">dollar</keysym>
+                <keysym keyval="52" label="う">4</keysym>
+                <keysym keyval="36" label="ぅ">dollar</keysym>
             </symbols>
         </key>
         <key id="keycode12" name="AE03" column="3" row="0">
@@ -615,10 +615,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="51">3</keysym>
                 <keysym keyval="35">numbersign</keysym>
-                <keysym keyval="1201">kana_A</keysym>
-                <keysym keyval="1191">kana_a</keysym>
-                <keysym keyval="1201" label="あ">kana_A</keysym>
-                <keysym keyval="1191" label="ぁ">kana_a</keysym>
+                <keysym keyval="51" label="ア">3</keysym>
+                <keysym keyval="35" label="ァ">numbersign</keysym>
+                <keysym keyval="51" label="あ">3</keysym>
+                <keysym keyval="35" label="ぁ">numbersign</keysym>
             </symbols>
         </key>
         <key id="keycode11" name="AE02" column="2" row="0">
@@ -627,10 +627,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="50">2</keysym>
                 <keysym keyval="64">at</keysym>
-                <keysym keyval="1228">kana_HU</keysym>
-                <keysym></keysym>
-                <keysym keyval="1228" label="ふ">kana_HU</keysym>
-                <keysym></keysym>
+                <keysym keyval="50" label="フ">2</keysym>
+                <keysym keyval="64" label="ブ">at</keysym>
+                <keysym keyval="50" label="ふ">2</keysym>
+                <keysym keyval="64" label="ぶ">at</keysym>
             </symbols>
         </key>
         <key id="keycode10" name="AE01" column="1" row="0">
@@ -639,10 +639,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="49">1</keysym>
                 <keysym keyval="33">exclam</keysym>
-                <keysym keyval="1223">kana_NU</keysym>
-                <keysym></keysym>
-                <keysym keyval="1223" label="ぬ">kana_NU</keysym>
-                <keysym></keysym>
+                <keysym keyval="49" label="ヌ">1</keysym>
+                <keysym keyval="33" label="プ">exclam</keysym>
+                <keysym keyval="49" label="ぬ">1</keysym>
+                <keysym keyval="33" label="ぷ">exclam</keysym>
             </symbols>
         </key>
         <key id="keycode49" name="TLDE" column="0" row="0">
@@ -651,10 +651,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="96">quoteleft</keysym>
                 <keysym keyval="126">asciitilde</keysym>
-                <keysym keyval="65322">Zenkaku_Hankaku</keysym>
-                <keysym keyval="65313">Kanji</keysym>
-                <keysym keyval="65322">Zenkaku_Hankaku</keysym>
-                <keysym keyval="65313">Kanji</keysym>
+                <keysym keyval="65313" label="漢">Kanji</keysym>
+                <keysym keyval="65313" label="漢">Kanji</keysym>
+                <keysym keyval="65313" label="漢">Kanji</keysym>
+                <keysym keyval="65313" label="漢">Kanji</keysym>
             </symbols>
         </key>
     </section>

@@ -25,6 +25,7 @@ engine_skk_PYTHON = \
 	skk.py \
 	kzik.py \
 	nicola.py \
+	vkbd.py \
 	$(NULL)
 engine_skk_DATA = \
 	keyboard.xml

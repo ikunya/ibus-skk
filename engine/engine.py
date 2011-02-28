@@ -31,84 +31,11 @@ try:
     from gtk import clipboard_get
 except ImportError:
     clipboard_get = lambda a : None
-try:
-    import eekboard, virtkey
-    has_virtual_keyboard = True
-except ImportError:
-    has_virtual_keyboard = False
+import vkbd
 
 from gettext import dgettext
 _  = lambda a : dgettext("ibus-skk", a)
 N_ = lambda a : a
-
-KEYBOARD_MODE_NONE, KEYBOARD_MODE_US, KEYBOARD_MODE_KANA = range(3)
-
-KANA_KEYSYM_TO_UNICHR = {
-  0x047e: u'\u203E',
-  0x04a1: u'\u3002',
-  0x04a2: u'\u300C',
-  0x04a3: u'\u300D',
-  0x04a4: u'\u3001',
-  0x04a5: u'\u30FB',
-  0x04a6: u'\u30F2',
-  0x04a7: u'\u30A1',
-  0x04a8: u'\u30A3',
-  0x04a9: u'\u30A5',
-  0x04aa: u'\u30A7',
-  0x04ab: u'\u30A9',
-  0x04ac: u'\u30E3',
-  0x04ad: u'\u30E5',
-  0x04ae: u'\u30E7',
-  0x04af: u'\u30C3',
-  0x04b0: u'\u30FC',
-  0x04b1: u'\u30A2',
-  0x04b2: u'\u30A4',
-  0x04b3: u'\u30A6',
-  0x04b4: u'\u30A8',
-  0x04b5: u'\u30AA',
-  0x04b6: u'\u30AB',
-  0x04b7: u'\u30AD',
-  0x04b8: u'\u30AF',
-  0x04b9: u'\u30B1',
-  0x04ba: u'\u30B3',
-  0x04bb: u'\u30B5',
-  0x04bc: u'\u30B7',
-  0x04bd: u'\u30B9',
-  0x04be: u'\u30BB',
-  0x04bf: u'\u30BD',
-  0x04c0: u'\u30BF',
-  0x04c1: u'\u30C1',
-  0x04c2: u'\u30C4',
-  0x04c3: u'\u30C6',
-  0x04c4: u'\u30C8',
-  0x04c5: u'\u30CA',
-  0x04c6: u'\u30CB',
-  0x04c7: u'\u30CC',
-  0x04c8: u'\u30CD',
-  0x04c9: u'\u30CE',
-  0x04ca: u'\u30CF',
-  0x04cb: u'\u30D2',
-  0x04cc: u'\u30D5',
-  0x04cd: u'\u30D8',
-  0x04ce: u'\u30DB',
-  0x04cf: u'\u30DE',
-  0x04d0: u'\u30DF',
-  0x04d1: u'\u30E0',
-  0x04d2: u'\u30E1',
-  0x04d3: u'\u30E2',
-  0x04d4: u'\u30E4',
-  0x04d5: u'\u30E6',
-  0x04d6: u'\u30E8',
-  0x04d7: u'\u30E9',
-  0x04d8: u'\u30EA',
-  0x04d9: u'\u30EB',
-  0x04da: u'\u30EC',
-  0x04db: u'\u30ED',
-  0x04dc: u'\u30EF',
-  0x04dd: u'\u30F3',
-  0x04de: u'\u309B',
-  0x04df: u'\u309C'
-}
 
 class CandidateSelector(skk.CandidateSelector):
     def __init__(self, lookup_table, keys, page_size, pagination_start):
@@ -258,9 +185,12 @@ class Engine(ibus.EngineBase):
         self.__skk.custom_rom_kana_rule = \
             self.config.get_value('custom_rom_kana_rule')
 
-        self.__keyboard_mode = KEYBOARD_MODE_NONE
-        self.__eekboard_eekboard = None
-        self.__eekboard_context = None
+        try:
+            vkbd_path = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
+                                     'engine', 'keyboard.xml')
+            self.__vkbd = vkbd.Vkbd(self, vkbd_path)
+        except:
+            self.__vkbd = None
 
         self.__skk.reset()
         self.__skk.activate_input_mode(self.__initial_input_mode)
@@ -274,6 +204,8 @@ class Engine(ibus.EngineBase):
             self.__nicola_handler = None
         else:
             self.__nicola = None
+
+    input_mode = property(lambda self: self.__input_mode)
 
     def __init_props(self):
         skk_props = ibus.PropList()
@@ -309,7 +241,7 @@ class Engine(ibus.EngineBase):
         input_mode_prop.set_sub_props(props)
         skk_props.append(input_mode_prop)
 
-        if has_virtual_keyboard:
+        if self.__vkbd:
             keyboard_prop = ibus.Property(key=u"Keyboard",
                                           icon=u"eekboard",
                                           tooltip=_(u"Launch on-screen keyboard"))
@@ -330,30 +262,9 @@ class Engine(ibus.EngineBase):
         prop = self.__prop_dict[u"InputMode"]
         prop.label = self.__input_mode_labels[self.__input_mode]
         self.update_property(prop)
-        if has_virtual_keyboard:
-            if self.__keyboard_mode == KEYBOARD_MODE_KANA:
-                if self.__input_mode == skk.INPUT_MODE_KATAKANA:
-                    self.__eekboard_context.set_group(1)
-                else:
-                    self.__eekboard_context.set_group(2)
+        if self.__vkbd:
+            self.__vkbd.update_input_mode()
         self.__invalidate()
-
-    def __activate_keyboard_mode(self, keyboard_mode):
-        self.__keyboard_mode = keyboard_mode
-        if not self.__eekboard_context:
-            self.__init_keyboard()
-            self.__eekboard_eekboard.push_context(self.__eekboard_context)
-        if self.__keyboard_mode == KEYBOARD_MODE_NONE:
-            self.__eekboard_context.hide_keyboard()
-        elif self.__keyboard_mode == KEYBOARD_MODE_US:
-            self.__eekboard_context.set_group(0)
-            self.__eekboard_context.show_keyboard()
-        elif self.__keyboard_mode == KEYBOARD_MODE_KANA:
-            if self.__input_mode == skk.INPUT_MODE_KATAKANA:
-                self.__eekboard_context.set_group(1)
-            else:
-                self.__eekboard_context.set_group(2)
-                self.__eekboard_context.show_keyboard()
 
     def __get_clipboard(self, clipboard, text, data):
         clipboard_text = clipboard.wait_for_text()
@@ -426,11 +337,12 @@ class Engine(ibus.EngineBase):
             keychr = u'rshift'
         else:
             keychr = unichr(keyval)
-            if keyval in KANA_KEYSYM_TO_UNICHR:
-                keychr = KANA_KEYSYM_TO_UNICHR[keyval]
-                if 0x30A0 > ord(keychr) or ord(keychr) > 0x30FF:
-                    return len(self.__skk.preedit) > 0
-                keychr = u'kana+' + keychr
+            if self.__vkbd and \
+                    self.__vkbd.keyboard_mode == vkbd.KEYBOARD_MODE_KANA:
+                if keyval == keysyms.Kanji:
+                    keychr = u'kana+kanji'
+                else:
+                    keychr = u'kana+' + keychr
             elif 0x20 > ord(keychr) or ord(keychr) > 0x7E:
                 # If the pre-edit buffer is visible, always handle key events:
                 # http://github.com/ueno/ibus-skk/issues/#issue/5
@@ -635,8 +547,8 @@ class Engine(ibus.EngineBase):
             self.__skk.activate_input_mode(self.__suspended_mode)
             self.__suspended_mode = None
         self.__update_input_mode()
-        if has_virtual_keyboard:
-            self.__eekboard_eekboard.push_context(self.__eekboard_context)
+        if self.__vkbd:
+            self.__vkbd.enable()
 
     def focus_out(self):
         self.__suspended_mode = self.__skk.input_mode
@@ -645,58 +557,12 @@ class Engine(ibus.EngineBase):
         self.__lookup_table.clean()
         self.__update()
         self.reset()
-        if has_virtual_keyboard:
-            self.__eekboard_eekboard.pop_context()
+        if self.__vkbd:
+            self.__vkbd.disable()
 
     def reset(self):
         self.__skk.reset()
         self.__skk.activate_input_mode(self.__initial_input_mode)
-
-    def __process_virtual_key_event(self, key, modifiers):
-        symbol = key.get_symbol()
-        if symbol.is_modifier() or not isinstance(symbol, eekboard.Keysym):
-            return False
-
-        # handle special keys
-        if modifiers == 0:
-            if symbol.get_xkeysym() == keysyms.Eisu_toggle:
-                self.__activate_keyboard_mode(KEYBOARD_MODE_US)
-                return True
-            elif symbol.get_xkeysym() == keysyms.Hiragana_Katakana:
-                self.__activate_keyboard_mode(KEYBOARD_MODE_KANA)
-                return True
-                
-        modifiers |= self.__eekboard_keyboard.get_modifiers()
-        if self.process_key_event(symbol.get_xkeysym(), \
-                                      key.get_keycode(), \
-                                      modifiers):
-            return True
-        elif symbol.get_xkeysym() not in KANA_KEYSYM_TO_UNICHR:
-            if modifiers & modifier.RELEASE_MASK:
-                self.__virtkey.release_keycode(key.get_keycode())
-            else:
-                self.__virtkey.press_keycode(key.get_keycode())
-
-    def __virtual_key_pressed_cb(self, keyboard, key):
-        return self.__process_virtual_key_event(key, 0)
-
-    def __virtual_key_released_cb(self, keyboard, key):
-        return self.__process_virtual_key_event(key, modifier.RELEASE_MASK)
-
-    def __init_keyboard(self):
-        path = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
-                            'engine', 'keyboard.xml')
-        self.__eekboard_keyboard = \
-            eekboard.XmlKeyboard(path, eekboard.MODIFIER_BEHAVIOR_LATCH)
-        self.__eekboard_keyboard.connect('key-pressed',
-                                         self.__virtual_key_pressed_cb)
-        self.__eekboard_keyboard.connect('key-released',
-                                         self.__virtual_key_released_cb)
-        self.__eekboard_eekboard = eekboard.Eekboard()
-        self.__eekboard_context = \
-            self.__eekboard_eekboard.create_context("ibus-skk")
-        self.__eekboard_context.set_keyboard(self.__eekboard_keyboard)
-        self.__virtkey = virtkey.virtkey()
 
     def property_activate(self, prop_name, state):
         # print "PropertyActivate(%s, %d)" % (prop_name, state)
@@ -705,12 +571,12 @@ class Engine(ibus.EngineBase):
                 input_mode = self.__prop_name_input_modes[prop_name]
                 self.__skk.activate_input_mode(input_mode)
                 self.__update_input_mode()
-        elif prop_name == 'Keyboard':
-            if self.__keyboard_mode == KEYBOARD_MODE_NONE:
-                keyboard_mode = KEYBOARD_MODE_US
+        elif prop_name == 'Keyboard' and self.__vkbd:
+            if self.__vkbd.keyboard_mode == vkbd.KEYBOARD_MODE_NONE:
+                keyboard_mode = vkbd.KEYBOARD_MODE_US
             else:
-                keyboard_mode = KEYBOARD_MODE_NONE
-            self.__activate_keyboard_mode(keyboard_mode)
+                keyboard_mode = vkbd.KEYBOARD_MODE_NONE
+            self.__vkbd.activate_keyboard_mode(keyboard_mode, self.__input_mode)
         else:
             if prop_name == 'setup':
                 self.__start_setup()

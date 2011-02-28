@@ -468,6 +468,94 @@ TRANSLATED_STRINGS = {
     u'kuten-prompt': u'Kuten([MM]KKTT) '
 }
 
+US_KEYBOARD_KANA_RULE = {
+    u'/': u'め',
+    u'?': u'・',
+    u'.': u'る',
+    u'>': u'。',
+    u',': u'ね',
+    u'<': u'、',
+    u'm': u'も',
+    u'n': u'み',
+    u'b': u'こ',
+    u'B': u'ご',
+    u'v': u'ひ',
+    u'V': u'び',
+    u'c': u'そ',
+    u'C': u'ぞ',
+    u'x': u'さ',
+    u'X': u'ざ',
+    u'z': u'つ',
+    u'Z': u'っ',
+    u'\'': u'け',
+    u'"': u'げ',
+    u';': u'れ',
+    u':': u'ぺ',
+    u'l': u'り',
+    u'k': u'の',
+    u'K': u'ぽ',
+    u'j': u'ま',
+    u'h': u'く',
+    u'H': u'ぐ',
+    u'g': u'き',
+    u'G': u'ぎ',
+    u'f': u'は',
+    u'F': u'ば',
+    u'd': u'し',
+    u'D': u'じ',
+    u's': u'と',
+    u'S': u'ど',
+    u'a': u'ち',
+    u'A': u'ぢ',
+    u'\\': u'む',
+    u'|': u'」',
+    u']': u'゜',
+    u'}': u'「',
+    u'[': u'゛',
+    u'p': u'せ',
+    u'P': u'ぜ',
+    u'o': u'ら',
+    u'i': u'に',
+    u'I': u'ぴ',
+    u'u': u'な',
+    u'U': u'ぱ',
+    u'y': u'ん',
+    u't': u'か',
+    u'T': u'が',
+    u'r': u'す',
+    u'R': u'ず',
+    u'e': u'い',
+    u'E': u'ぃ',
+    u'w': u'て',
+    u'W': u'で',
+    u'q': u'た',
+    u'Q': u'だ',
+    u'=': u'へ',
+    u'+': u'べ',
+    u'-': u'ほ',
+    u'_': u'ぼ',
+    u'0': u'わ',
+    u')': u'を',
+    u'9': u'よ',
+    u'(': u'ょ',
+    u'8': u'ゆ',
+    u'*': u'ゅ',
+    u'7': u'や',
+    u'&': u'ゃ',
+    u'6': u'お',
+    u'^': u'ぉ',
+    u'5': u'え',
+    u'%': u'ぇ',
+    u'4': u'う',
+    u'$': u'ぅ',
+    u'3': u'あ',
+    u'#': u'ぁ',
+    u'2': u'ふ',
+    u'@': u'ぶ',
+    u'1': u'ぬ',
+    u'!': u'ぷ',
+}
+
 class DictBase(object):
     ENCODING = 'EUC-JIS-2004'
 
@@ -1416,7 +1504,8 @@ class Context(object):
 
             # Start rom-kan mode (Q).
             if key.letter == 'Q' or \
-                    (key.is_nicola() and key.letter == '[fj]'):
+                    (key.is_nicola() and key.letter == '[fj]') or \
+                    (key.is_kana() and key.letter == 'kanji'):
                 self.__current_state().conv_state = CONV_STATE_START
                 return (True, u'')
 
@@ -1610,7 +1699,8 @@ class Context(object):
 
             if (key.letter.isupper() and \
                     not self.__rom_kana_key_is_acceptable(key)) or \
-                    (key.is_nicola() and key.letter == '[fj]'):
+                    (key.is_nicola() and key.letter == '[fj]') or \
+                    (key.is_kana() and key.letter == 'kanji'):
                 rom_kana_state = self.__convert_nn(self.__current_state().rom_kana_state)
                 if len(rom_kana_state[1]) == 0 and \
                         not self.__current_state().okuri_rom_kana_state:
@@ -1619,7 +1709,8 @@ class Context(object):
                         (u'', u'', self.__rom_kana_rule_tree)
 
             if self.__current_state().okuri_rom_kana_state and \
-                    not (key.is_nicola() and key.letter == '[fj]'):
+                    not (key.is_nicola() and key.letter == '[fj]') and \
+                    not (key.is_kana() and key.letter == 'kanji'):
                 okuri = None
                 # Issue#10: check OUTPUT was produced by 'n'
                 for nn in (u'ん', u'ン', u'ﾝ'):
@@ -1628,7 +1719,7 @@ class Context(object):
                         okuri = u'n'
                         break
                 if not okuri:
-                    if key.is_nicola():
+                    if key.is_nicola() or key.is_kana():
                         okuri_rom_kana_state = \
                             self.__convert_kana(key, (u'', u'', dict()))
                         okuri = OKURI_RULE[okuri_rom_kana_state[0]]
@@ -1967,8 +2058,10 @@ elements will be "[[DictEdit]] かんが*え ", "▽", "かんが", "*え" .'''
 
     def __convert_kana_kana(self, key, state):
         assert key.is_kana()
+        hiragana = US_KEYBOARD_KANA_RULE.get(key.letter)
+        if not hiragana:
+            return state
         output, pending, tree = state
-        hiragana = katakana_to_hiragana(key.letter)
         output += self.__convert_kana_by_input_mode(key.letter, hiragana)
         return (output, pending, tree)
 
