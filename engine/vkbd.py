@@ -38,7 +38,8 @@ class Vkbd(object):
         self.__virtkey = virtkey.virtkey()
         self.__eekboard = eekboard.Eekboard()
         self.__context = self.__eekboard.create_context("")
-        self.__context.set_keyboard(self.__keyboard)
+        keyboard_id = self.__context.add_keyboard(self.__keyboard)
+        self.__context.set_keyboard(keyboard_id)
 
     keyboard_mode = property(lambda self: self.__keyboard_mode)
 
