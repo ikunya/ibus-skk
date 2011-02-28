@@ -478,62 +478,40 @@ US_KEYBOARD_KANA_RULE = {
     u'm': u'も',
     u'n': u'み',
     u'b': u'こ',
-    u'B': u'ご',
     u'v': u'ひ',
-    u'V': u'び',
     u'c': u'そ',
-    u'C': u'ぞ',
     u'x': u'さ',
-    u'X': u'ざ',
     u'z': u'つ',
     u'Z': u'っ',
     u'\'': u'け',
-    u'"': u'げ',
     u';': u'れ',
-    u':': u'ぺ',
     u'l': u'り',
     u'k': u'の',
-    u'K': u'ぽ',
     u'j': u'ま',
     u'h': u'く',
-    u'H': u'ぐ',
     u'g': u'き',
-    u'G': u'ぎ',
     u'f': u'は',
-    u'F': u'ば',
     u'd': u'し',
-    u'D': u'じ',
     u's': u'と',
-    u'S': u'ど',
     u'a': u'ち',
-    u'A': u'ぢ',
     u'\\': u'む',
     u'|': u'」',
     u']': u'゜',
     u'}': u'「',
     u'[': u'゛',
     u'p': u'せ',
-    u'P': u'ぜ',
     u'o': u'ら',
     u'i': u'に',
-    u'I': u'ぴ',
     u'u': u'な',
-    u'U': u'ぱ',
     u'y': u'ん',
     u't': u'か',
-    u'T': u'が',
     u'r': u'す',
-    u'R': u'ず',
     u'e': u'い',
     u'E': u'ぃ',
     u'w': u'て',
-    u'W': u'で',
     u'q': u'た',
-    u'Q': u'だ',
     u'=': u'へ',
-    u'+': u'べ',
     u'-': u'ほ',
-    u'_': u'ぼ',
     u'0': u'わ',
     u')': u'を',
     u'9': u'よ',
@@ -551,9 +529,7 @@ US_KEYBOARD_KANA_RULE = {
     u'3': u'あ',
     u'#': u'ぁ',
     u'2': u'ふ',
-    u'@': u'ぶ',
     u'1': u'ぬ',
-    u'!': u'ぷ',
 }
 
 class DictBase(object):
@@ -1194,6 +1170,9 @@ class Key(object):
     letter = property(lambda self: self.__letter)
     keyval = property(lambda self: self.__keyval)
 
+    def is_letter(self):
+        return len(self.__modifiers) == 0
+
     def is_ctrl(self):
         return 'ctrl' in self.__modifiers
 
@@ -1503,7 +1482,7 @@ class Context(object):
                 return (True, u'')
 
             # Start rom-kan mode (Q).
-            if key.letter == 'Q' or \
+            if (key.is_letter() and key.letter == 'Q') or \
                     (key.is_nicola() and key.letter == '[fj]') or \
                     (key.is_kana() and key.letter == 'kanji'):
                 self.__current_state().conv_state = CONV_STATE_START
@@ -1511,7 +1490,7 @@ class Context(object):
 
             # Start rom-kan mode and insert a character which
             # triggered the transition.
-            if key.letter.isupper():
+            if key.is_letter() and key.letter.isupper():
                 self.__current_state().conv_state = CONV_STATE_START
 
             self.__current_state().rom_kana_state = \

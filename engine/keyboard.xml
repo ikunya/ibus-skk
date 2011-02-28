@@ -100,9 +100,9 @@
                 <keysym keyval="109">m</keysym>
                 <keysym keyval="77">M</keysym>
                 <keysym keyval="109" label="モ">m</keysym>
-                <keysym keyval="77" label="　">M</keysym>
+                <keysym keyval="77" label="">M</keysym>
                 <keysym keyval="109" label="も">m</keysym>
-                <keysym keyval="77" label="　">M</keysym>
+                <keysym keyval="77" label="">M</keysym>
             </symbols>
         </key>
         <key id="keycode57" name="AB06" column="6" row="3">
@@ -112,9 +112,9 @@
                 <keysym keyval="110">n</keysym>
                 <keysym keyval="78">N</keysym>
                 <keysym keyval="110" label="ミ">n</keysym>
-                <keysym keyval="78" label="　">N</keysym>
+                <keysym keyval="78" label="">N</keysym>
                 <keysym keyval="110" label="み">n</keysym>
-                <keysym keyval="78" label="　">N</keysym>
+                <keysym keyval="78" label="">N</keysym>
             </symbols>
         </key>
         <key id="keycode56" name="AB05" column="5" row="3">
@@ -124,9 +124,9 @@
                 <keysym keyval="98">b</keysym>
                 <keysym keyval="66">B</keysym>
                 <keysym keyval="98" label="コ">b</keysym>
-                <keysym keyval="66" label="ゴ">B</keysym>
+                <keysym keyval="66" label="">B</keysym>
                 <keysym keyval="98" label="こ">b</keysym>
-                <keysym keyval="66" label="ご">B</keysym>
+                <keysym keyval="66" label="">B</keysym>
             </symbols>
         </key>
         <key id="keycode55" name="AB04" column="4" row="3">
@@ -136,9 +136,9 @@
                 <keysym keyval="118">v</keysym>
                 <keysym keyval="86">V</keysym>
                 <keysym keyval="118" label="ヒ">v</keysym>
-                <keysym keyval="86" label="ビ">V</keysym>
+                <keysym keyval="86" label="">V</keysym>
                 <keysym keyval="118" label="ひ">v</keysym>
-                <keysym keyval="86" label="び">V</keysym>
+                <keysym keyval="86" label="">V</keysym>
             </symbols>
         </key>
         <key id="keycode54" name="AB03" column="3" row="3">
@@ -148,9 +148,9 @@
                 <keysym keyval="99">c</keysym>
                 <keysym keyval="67">C</keysym>
                 <keysym keyval="99" label="ソ">c</keysym>
-                <keysym keyval="67" label="ゾ">C</keysym>
+                <keysym keyval="67" label="">C</keysym>
                 <keysym keyval="99" label="そ">c</keysym>
-                <keysym keyval="67" label="ぞ">C</keysym>
+                <keysym keyval="67" label="">C</keysym>
             </symbols>
         </key>
         <key id="keycode53" name="AB02" column="2" row="3">
@@ -160,9 +160,9 @@
                 <keysym keyval="120">x</keysym>
                 <keysym keyval="88">X</keysym>
                 <keysym keyval="120" label="サ">x</keysym>
-                <keysym keyval="88" label="ザ">X</keysym>
+                <keysym keyval="88" label="">X</keysym>
                 <keysym keyval="120" label="さ">x</keysym>
-                <keysym keyval="88" label="ざ">X</keysym>
+                <keysym keyval="88" label="">X</keysym>
             </symbols>
         </key>
         <key id="keycode52" name="AB01" column="1" row="3">
@@ -198,9 +198,9 @@
                 <keysym keyval="39">quoteright</keysym>
                 <keysym keyval="34">quotedbl</keysym>
                 <keysym keyval="39" label="ケ">quoteright</keysym>
-                <keysym keyval="34" label="ゲ">quotedbl</keysym>
+                <keysym keyval="34" label="">quotedbl</keysym>
                 <keysym keyval="39" label="け">quoteright</keysym>
-                <keysym keyval="34" label="げ">quotedbl</keysym>
+                <keysym keyval="34" label="">quotedbl</keysym>
             </symbols>
         </key>
         <key id="keycode47" name="AC10" column="10" row="2">
@@ -210,9 +210,9 @@
                 <keysym keyval="59">semicolon</keysym>
                 <keysym keyval="58">colon</keysym>
                 <keysym keyval="59" label="レ">semicolon</keysym>
-                <keysym keyval="58" label="ペ">colon</keysym>
+                <keysym keyval="58" label="">colon</keysym>
                 <keysym keyval="59" label="れ">semicolon</keysym>
-                <keysym keyval="58" label="ぺ">colon</keysym>
+                <keysym keyval="58" label="">colon</keysym>
             </symbols>
         </key>
         <key id="keycode46" name="AC09" column="9" row="2">
@@ -222,9 +222,9 @@
                 <keysym keyval="108">l</keysym>
                 <keysym keyval="76">L</keysym>
                 <keysym keyval="108" label="リ">l</keysym>
-                <keysym keyval="76" label="　">L</keysym>
+                <keysym keyval="76" label="">L</keysym>
                 <keysym keyval="108" label="り">l</keysym>
-                <keysym keyval="76" label="　">L</keysym>
+                <keysym keyval="76" label="">L</keysym>
             </symbols>
         </key>
         <key id="keycode45" name="AC08" column="8" row="2">
@@ -234,9 +234,9 @@
                 <keysym keyval="107">k</keysym>
                 <keysym keyval="75">K</keysym>
                 <keysym keyval="107" label="ノ">k</keysym>
-                <keysym keyval="75" label="ポ">K</keysym>
+                <keysym keyval="75" label="">K</keysym>
                 <keysym keyval="107" label="の">k</keysym>
-                <keysym keyval="75" label="ぽ">K</keysym>
+                <keysym keyval="75" label="">K</keysym>
             </symbols>
         </key>
         <key id="keycode44" name="AC07" column="7" row="2">
@@ -246,9 +246,9 @@
                 <keysym keyval="106">j</keysym>
                 <keysym keyval="74">J</keysym>
                 <keysym keyval="106" label="マ">j</keysym>
-                <keysym keyval="74" label="　">J</keysym>
+                <keysym keyval="74" label="">J</keysym>
                 <keysym keyval="106" label="ま">j</keysym>
-                <keysym keyval="74" label="　">J</keysym>
+                <keysym keyval="74" label="">J</keysym>
             </symbols>
         </key>
         <key id="keycode43" name="AC06" column="6" row="2">
@@ -258,9 +258,9 @@
                 <keysym keyval="104">h</keysym>
                 <keysym keyval="72">H</keysym>
                 <keysym keyval="104" label="ク">h</keysym>
-                <keysym keyval="72" label="グ">H</keysym>
+                <keysym keyval="72" label="">H</keysym>
                 <keysym keyval="104" label="く">h</keysym>
-                <keysym keyval="72" label="ぐ">H</keysym>
+                <keysym keyval="72" label="">H</keysym>
             </symbols>
         </key>
         <key id="keycode42" name="AC05" column="5" row="2">
@@ -270,9 +270,9 @@
                 <keysym keyval="103">g</keysym>
                 <keysym keyval="71">G</keysym>
                 <keysym keyval="103" label="キ">g</keysym>
-                <keysym keyval="71" label="ギ">G</keysym>
+                <keysym keyval="71" label="">G</keysym>
                 <keysym keyval="103" label="き">g</keysym>
-                <keysym keyval="71" label="ぎ">G</keysym>
+                <keysym keyval="71" label="">G</keysym>
             </symbols>
         </key>
         <key id="keycode41" name="AC04" column="4" row="2">
@@ -282,9 +282,9 @@
                 <keysym keyval="102">f</keysym>
                 <keysym keyval="70">F</keysym>
                 <keysym keyval="102" label="ハ">f</keysym>
-                <keysym keyval="70" label="バ">F</keysym>
+                <keysym keyval="70" label="">F</keysym>
                 <keysym keyval="102" label="は">f</keysym>
-                <keysym keyval="70" label="ば">F</keysym>
+                <keysym keyval="70" label="">F</keysym>
             </symbols>
         </key>
         <key id="keycode40" name="AC03" column="3" row="2">
@@ -294,9 +294,9 @@
                 <keysym keyval="100">d</keysym>
                 <keysym keyval="68">D</keysym>
                 <keysym keyval="100" label="シ">d</keysym>
-                <keysym keyval="68" label="ジ">D</keysym>
+                <keysym keyval="68" label="">D</keysym>
                 <keysym keyval="100" label="し">d</keysym>
-                <keysym keyval="68" label="じ">D</keysym>
+                <keysym keyval="68" label="">D</keysym>
             </symbols>
         </key>
         <key id="keycode39" name="AC02" column="2" row="2">
@@ -306,9 +306,9 @@
                 <keysym keyval="115">s</keysym>
                 <keysym keyval="83">S</keysym>
                 <keysym keyval="115" label="ト">s</keysym>
-                <keysym keyval="83" label="ド">S</keysym>
+                <keysym keyval="83" label="">S</keysym>
                 <keysym keyval="115" label="と">s</keysym>
-                <keysym keyval="83" label="ど">S</keysym>
+                <keysym keyval="83" label="">S</keysym>
             </symbols>
         </key>
         <key id="keycode38" name="AC01" column="1" row="2">
@@ -318,9 +318,9 @@
                 <keysym keyval="97">a</keysym>
                 <keysym keyval="65">A</keysym>
                 <keysym keyval="97" label="チ">a</keysym>
-                <keysym keyval="65" label="ヂ">A</keysym>
+                <keysym keyval="65" label="">A</keysym>
                 <keysym keyval="97" label="ち">a</keysym>
-                <keysym keyval="65" label="ぢ">A</keysym>
+                <keysym keyval="65" label="">A</keysym>
             </symbols>
         </key>
         <key id="keycode66" name="CAPS" column="0" row="2">
@@ -373,9 +373,9 @@
                 <keysym keyval="112">p</keysym>
                 <keysym keyval="80">P</keysym>
                 <keysym keyval="112" label="セ">p</keysym>
-                <keysym keyval="80" label="ゼ">P</keysym>
+                <keysym keyval="80" label="">P</keysym>
                 <keysym keyval="112" label="せ">p</keysym>
-                <keysym keyval="80" label="ぜ">P</keysym>
+                <keysym keyval="80" label="">P</keysym>
             </symbols>
         </key>
         <key id="keycode32" name="AD09" column="9" row="1">
@@ -385,9 +385,9 @@
                 <keysym keyval="111">o</keysym>
                 <keysym keyval="79">O</keysym>
                 <keysym keyval="111" label="ラ">o</keysym>
-                <keysym keyval="79" label="　">O</keysym>
+                <keysym keyval="79" label="">O</keysym>
                 <keysym keyval="111" label="ら">o</keysym>
-                <keysym keyval="79" label="　">O</keysym>
+                <keysym keyval="79" label="">O</keysym>
             </symbols>
         </key>
         <key id="keycode31" name="AD08" column="8" row="1">
@@ -397,9 +397,9 @@
                 <keysym keyval="105">i</keysym>
                 <keysym keyval="73">I</keysym>
                 <keysym keyval="105" label="ニ">i</keysym>
-                <keysym keyval="73" label="ピ">I</keysym>
+                <keysym keyval="73" label="">I</keysym>
                 <keysym keyval="105" label="に">i</keysym>
-                <keysym keyval="73" label="ぴ">I</keysym>
+                <keysym keyval="73" label="">I</keysym>
             </symbols>
         </key>
         <key id="keycode30" name="AD07" column="7" row="1">
@@ -409,9 +409,9 @@
                 <keysym keyval="117">u</keysym>
                 <keysym keyval="85">U</keysym>
                 <keysym keyval="117" label="ナ">u</keysym>
-                <keysym keyval="85" label="パ">U</keysym>
+                <keysym keyval="85" label="">U</keysym>
                 <keysym keyval="117" label="な">u</keysym>
-                <keysym keyval="85" label="ぱ">U</keysym>
+                <keysym keyval="85" label="">U</keysym>
             </symbols>
         </key>
         <key id="keycode29" name="AD06" column="6" row="1">
@@ -421,9 +421,9 @@
                 <keysym keyval="121">y</keysym>
                 <keysym keyval="89">Y</keysym>
                 <keysym keyval="121" label="ン">y</keysym>
-                <keysym keyval="89" label="　">Y</keysym>
+                <keysym keyval="89" label="">Y</keysym>
                 <keysym keyval="121" label="ん">y</keysym>
-                <keysym keyval="89" label="　">Y</keysym>
+                <keysym keyval="89" label="">Y</keysym>
             </symbols>
         </key>
         <key id="keycode28" name="AD05" column="5" row="1">
@@ -433,9 +433,9 @@
                 <keysym keyval="116">t</keysym>
                 <keysym keyval="84">T</keysym>
                 <keysym keyval="116" label="カ">t</keysym>
-                <keysym keyval="84" label="ガ">T</keysym>
+                <keysym keyval="84" label="">T</keysym>
                 <keysym keyval="116" label="か">t</keysym>
-                <keysym keyval="84" label="が">T</keysym>
+                <keysym keyval="84" label="">T</keysym>
             </symbols>
         </key>
         <key id="keycode27" name="AD04" column="4" row="1">
@@ -445,9 +445,9 @@
                 <keysym keyval="114">r</keysym>
                 <keysym keyval="82">R</keysym>
                 <keysym keyval="114" label="ス">r</keysym>
-                <keysym keyval="82" label="ズ">R</keysym>
+                <keysym keyval="82" label="">R</keysym>
                 <keysym keyval="114" label="す">r</keysym>
-                <keysym keyval="82" label="ず">R</keysym>
+                <keysym keyval="82" label="">R</keysym>
             </symbols>
         </key>
         <key id="keycode26" name="AD03" column="3" row="1">
@@ -469,9 +469,9 @@
                 <keysym keyval="119">w</keysym>
                 <keysym keyval="87">W</keysym>
                 <keysym keyval="119" label="テ">w</keysym>
-                <keysym keyval="87" label="デ">W</keysym>
+                <keysym keyval="87" label="">W</keysym>
                 <keysym keyval="119" label="て">w</keysym>
-                <keysym keyval="87" label="で">W</keysym>
+                <keysym keyval="87" label="">W</keysym>
             </symbols>
         </key>
         <key id="keycode24" name="AD01" column="1" row="1">
@@ -481,9 +481,9 @@
                 <keysym keyval="113">q</keysym>
                 <keysym keyval="81">Q</keysym>
                 <keysym keyval="113" label="タ">q</keysym>
-                <keysym keyval="81" label="ダ">Q</keysym>
+                <keysym keyval="81" label="">Q</keysym>
                 <keysym keyval="113" label="た">q</keysym>
-                <keysym keyval="81" label="だ">Q</keysym>
+                <keysym keyval="81" label="">Q</keysym>
             </symbols>
         </key>
         <key id="keycode23" name="TAB" column="0" row="1">
@@ -508,9 +508,9 @@
                 <keysym keyval="61">equal</keysym>
                 <keysym keyval="43">plus</keysym>
                 <keysym keyval="61" label="ヘ">equal</keysym>
-                <keysym keyval="43" label="ベ">plus</keysym>
+                <keysym keyval="43" label="">plus</keysym>
                 <keysym keyval="61" label="へ">equal</keysym>
-                <keysym keyval="43" label="べ">plus</keysym>
+                <keysym keyval="43" label="">plus</keysym>
             </symbols>
         </key>
         <key id="keycode20" name="AE11" column="11" row="0">
@@ -520,9 +520,9 @@
                 <keysym keyval="45">minus</keysym>
                 <keysym keyval="95">underscore</keysym>
                 <keysym keyval="45" label="ホ">minus</keysym>
-                <keysym keyval="95" label="ボ">underscore</keysym>
+                <keysym keyval="95" label="">underscore</keysym>
                 <keysym keyval="45" label="ほ">minus</keysym>
-                <keysym keyval="95" label="ぼ">underscore</keysym>
+                <keysym keyval="95" label="">underscore</keysym>
             </symbols>
         </key>
         <key id="keycode19" name="AE10" column="10" row="0">
@@ -628,9 +628,9 @@
                 <keysym keyval="50">2</keysym>
                 <keysym keyval="64">at</keysym>
                 <keysym keyval="50" label="フ">2</keysym>
-                <keysym keyval="64" label="ブ">at</keysym>
+                <keysym keyval="64" label="">at</keysym>
                 <keysym keyval="50" label="ふ">2</keysym>
-                <keysym keyval="64" label="ぶ">at</keysym>
+                <keysym keyval="64" label="">at</keysym>
             </symbols>
         </key>
         <key id="keycode10" name="AE01" column="1" row="0">
@@ -640,9 +640,9 @@
                 <keysym keyval="49">1</keysym>
                 <keysym keyval="33">exclam</keysym>
                 <keysym keyval="49" label="ヌ">1</keysym>
-                <keysym keyval="33" label="プ">exclam</keysym>
+                <keysym keyval="33" label="">exclam</keysym>
                 <keysym keyval="49" label="ぬ">1</keysym>
-                <keysym keyval="33" label="ぷ">exclam</keysym>
+                <keysym keyval="33" label="">exclam</keysym>
             </symbols>
         </key>
         <key id="keycode49" name="TLDE" column="0" row="0">
