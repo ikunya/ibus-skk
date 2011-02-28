@@ -360,10 +360,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="91">bracketleft</keysym>
                 <keysym keyval="123">braceleft</keysym>
-                <keysym keyval="1246">voicedsound</keysym>
-                <keysym></keysym>
-                <keysym keyval="1246">voicedsound</keysym>
-                <keysym></keysym>
+                <keysym keyval="91" label="゛">bracketleft</keysym>
+                <keysym keyval="123" label="">braceleft</keysym>
+                <keysym keyval="91" label="゛">bracketleft</keysym>
+                <keysym keyval="123" label="">braceleft</keysym>
             </symbols>
         </key>
         <key id="keycode33" name="AD10" column="10" row="1">
