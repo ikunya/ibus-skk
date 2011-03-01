@@ -185,18 +185,17 @@ class Engine(ibus.EngineBase):
         self.__skk.custom_rom_kana_rule = \
             self.config.get_value('custom_rom_kana_rule')
 
-        try:
-            vkbd_path = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
-                                     'engine', 'keyboard.xml')
-            self.__vkbd = vkbd.Vkbd(self, vkbd_path)
-        except:
-            self.__vkbd = None
+        vkbd_qwerty_path = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
+                                        'vkbd', 'qwerty.xml')
+        vkbd_table_path = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
+                                       'vkbd', 'table.xml')
+        self.__vkbd = vkbd.Vkbd(self, vkbd_qwerty_path, vkbd_table_path)
 
         self.__skk.reset()
         self.__skk.activate_input_mode(self.__initial_input_mode)
         self.__prop_dict = dict()
         self.__prop_list = self.__init_props()
-        self.__input_mode = skk.INPUT_MODE_NONE
+        self.__input_mode = None
         self.__update_input_mode()
         self.__suspended_mode = None
         if self.config.get_value('use_nicola'):
@@ -233,7 +232,7 @@ class Engine(ibus.EngineBase):
                                    type=ibus.PROP_TYPE_RADIO,
                                    label=_(u"HankakuKatakana")))
 
-        props[self.__skk.input_mode - 1].set_state(ibus.PROP_STATE_CHECKED)
+        props[self.__skk.input_mode].set_state(ibus.PROP_STATE_CHECKED)
 
         for prop in props:
             self.__prop_dict[prop.key] = prop
@@ -263,7 +262,7 @@ class Engine(ibus.EngineBase):
         prop.label = self.__input_mode_labels[self.__input_mode]
         self.update_property(prop)
         if self.__vkbd:
-            self.__vkbd.update_input_mode()
+            self.__vkbd.update_input_mode(self.__input_mode)
         self.__invalidate()
 
     def __get_clipboard(self, clipboard, text, data):
@@ -572,11 +571,11 @@ class Engine(ibus.EngineBase):
                 self.__skk.activate_input_mode(input_mode)
                 self.__update_input_mode()
         elif prop_name == 'Keyboard' and self.__vkbd:
-            if self.__vkbd.keyboard_mode == vkbd.KEYBOARD_MODE_NONE:
+            if self.__vkbd.keyboard_mode is None:
                 keyboard_mode = vkbd.KEYBOARD_MODE_US
             else:
-                keyboard_mode = vkbd.KEYBOARD_MODE_NONE
-            self.__vkbd.activate_keyboard_mode(keyboard_mode, self.__input_mode)
+                keyboard_mode = None
+            self.__vkbd.set_keyboard_mode(keyboard_mode)
         else:
             if prop_name == 'setup':
                 self.__start_setup()

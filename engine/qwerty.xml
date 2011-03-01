@@ -28,7 +28,7 @@
             <bounds>359.000000,104.000000,31.000000,24.000000</bounds>
             <oref>outline10</oref>
             <symbols groups="1" levels="1">
-                <keysym keyval="65508">Control_R</keysym>
+                <keysym keyval="65407" icon="phone">Num_Lock</keysym>
             </symbols>
         </key>
         <key id="keycode65" name="SPCE" column="3" row="4">
@@ -197,9 +197,9 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="39">quoteright</keysym>
                 <keysym keyval="34">quotedbl</keysym>
-                <keysym keyval="39" label="ケ">quoteright</keysym>
+                <keysym keyval="58" label="ケ">colon</keysym>
                 <keysym keyval="34" label="">quotedbl</keysym>
-                <keysym keyval="39" label="け">quoteright</keysym>
+                <keysym keyval="58" label="け">colon</keysym>
                 <keysym keyval="34" label="">quotedbl</keysym>
             </symbols>
         </key>
@@ -336,10 +336,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="92">backslash</keysym>
                 <keysym keyval="124">bar</keysym>
-                <keysym keyval="92" label="ム">backslash</keysym>
-                <keysym keyval="124" label="」">bar</keysym>
-                <keysym keyval="92" label="む">backslash</keysym>
-                <keysym keyval="124" label="」">bar</keysym>
+                <keysym keyval="93" label="ム">bracketright</keysym>
+                <keysym keyval="125" label="」">braceright</keysym>
+                <keysym keyval="93" label="む">bracketright</keysym>
+                <keysym keyval="125" label="」">braceright</keysym>
             </symbols>
         </key>
         <key id="keycode35" name="AD12" column="12" row="1">
@@ -348,10 +348,10 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="93">bracketright</keysym>
                 <keysym keyval="125">braceright</keysym>
-                <keysym keyval="93" label="゜">bracketright</keysym>
-                <keysym keyval="125" label="「">braceright</keysym>
-                <keysym keyval="93" label="゜">bracketright</keysym>
-                <keysym keyval="125" label="「">braceright</keysym>
+                <keysym keyval="91" label="゜">bracketleft</keysym>
+                <keysym keyval="123" label="「">braceleft</keysym>
+                <keysym keyval="91" label="゜">bracketleft</keysym>
+                <keysym keyval="123" label="「">braceleft</keysym>
             </symbols>
         </key>
         <key id="keycode34" name="AD11" column="11" row="1">
@@ -360,9 +360,9 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="91">bracketleft</keysym>
                 <keysym keyval="123">braceleft</keysym>
-                <keysym keyval="91" label="゛">bracketleft</keysym>
+                <keysym keyval="64" label="゛">at</keysym>
                 <keysym keyval="123" label="">braceleft</keysym>
-                <keysym keyval="91" label="゛">bracketleft</keysym>
+                <keysym keyval="64" label="゛">at</keysym>
                 <keysym keyval="123" label="">braceleft</keysym>
             </symbols>
         </key>
@@ -507,9 +507,9 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="61">equal</keysym>
                 <keysym keyval="43">plus</keysym>
-                <keysym keyval="61" label="ヘ">equal</keysym>
+                <keysym keyval="94" label="ヘ">asciicircum</keysym>
                 <keysym keyval="43" label="">plus</keysym>
-                <keysym keyval="61" label="へ">equal</keysym>
+                <keysym keyval="94" label="へ">asciicircum</keysym>
                 <keysym keyval="43" label="">plus</keysym>
             </symbols>
         </key>
@@ -519,9 +519,9 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="45">minus</keysym>
                 <keysym keyval="95">underscore</keysym>
-                <keysym keyval="45" label="ホ">minus</keysym>
+                <keysym keyval="61" label="ホ">equal</keysym>
                 <keysym keyval="95" label="">underscore</keysym>
-                <keysym keyval="45" label="ほ">minus</keysym>
+                <keysym keyval="61" label="ほ">equal</keysym>
                 <keysym keyval="95" label="">underscore</keysym>
             </symbols>
         </key>
@@ -532,9 +532,9 @@
                 <keysym keyval="48">0</keysym>
                 <keysym keyval="41">parenright</keysym>
                 <keysym keyval="48" label="ワ">0</keysym>
-                <keysym keyval="41" label="ヲ">parenright</keysym>
+                <keysym keyval="126" label="ヲ">asciitilde</keysym>
                 <keysym keyval="48" label="わ">0</keysym>
-                <keysym keyval="41" label="を">parenright</keysym>
+                <keysym keyval="126" label="を">asciitilde</keysym>
             </symbols>
         </key>
         <key id="keycode18" name="AE09" column="9" row="0">
@@ -544,9 +544,9 @@
                 <keysym keyval="57">9</keysym>
                 <keysym keyval="40">parenleft</keysym>
                 <keysym keyval="57" label="ヨ">9</keysym>
-                <keysym keyval="40" label="ョ">parenleft</keysym>
+                <keysym keyval="41" label="ョ">parenright</keysym>
                 <keysym keyval="57" label="よ">9</keysym>
-                <keysym keyval="40" label="ょ">parenleft</keysym>
+                <keysym keyval="41" label="ょ">parenright</keysym>
             </symbols>
         </key>
         <key id="keycode17" name="AE08" column="8" row="0">
@@ -556,9 +556,9 @@
                 <keysym keyval="56">8</keysym>
                 <keysym keyval="42">asterisk</keysym>
                 <keysym keyval="56" label="ユ">8</keysym>
-                <keysym keyval="42" label="ュ">asterisk</keysym>
+                <keysym keyval="40" label="ュ">parenleft</keysym>
                 <keysym keyval="56" label="ゆ">8</keysym>
-                <keysym keyval="42" label="ゅ">asterisk</keysym>
+                <keysym keyval="40" label="ゅ">parenleft</keysym>
             </symbols>
         </key>
         <key id="keycode16" name="AE07" column="7" row="0">
@@ -568,9 +568,9 @@
                 <keysym keyval="55">7</keysym>
                 <keysym keyval="38">ampersand</keysym>
                 <keysym keyval="55" label="ヤ">7</keysym>
-                <keysym keyval="38" label="ャ">ampersand</keysym>
+                <keysym keyval="39" label="ャ">quoteright</keysym>
                 <keysym keyval="55" label="や">7</keysym>
-                <keysym keyval="38" label="ゃ">ampersand</keysym>
+                <keysym keyval="39" label="ゃ">quoteright</keysym>
             </symbols>
         </key>
         <key id="keycode15" name="AE06" column="6" row="0">
@@ -580,9 +580,9 @@
                 <keysym keyval="54">6</keysym>
                 <keysym keyval="94">asciicircum</keysym>
                 <keysym keyval="54" label="オ">6</keysym>
-                <keysym keyval="94" label="ォ">asciicircum</keysym>
+                <keysym keyval="38" label="ォ">ampersand</keysym>
                 <keysym keyval="54" label="お">6</keysym>
-                <keysym keyval="94" label="ぉ">asciicircum</keysym>
+                <keysym keyval="38" label="ぉ">ampersand</keysym>
             </symbols>
         </key>
         <key id="keycode14" name="AE05" column="5" row="0">
@@ -627,9 +627,9 @@
             <symbols groups="3" levels="2">
                 <keysym keyval="50">2</keysym>
                 <keysym keyval="64">at</keysym>
-                <keysym keyval="50" label="フ">2</keysym>
+                <keysym keyval="34" label="フ">quotedbl</keysym>
                 <keysym keyval="64" label="">at</keysym>
-                <keysym keyval="50" label="ふ">2</keysym>
+                <keysym keyval="34" label="ふ">quotedbl</keysym>
                 <keysym keyval="64" label="">at</keysym>
             </symbols>
         </key>

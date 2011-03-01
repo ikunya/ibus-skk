@@ -27,9 +27,12 @@ engine_skk_PYTHON = \
 	nicola.py \
 	vkbd.py \
 	$(NULL)
-engine_skk_DATA = \
-	keyboard.xml
 engine_skkdir = $(pkgdatadir)/engine
+
+dist_engine_vkbd_DATA = \
+	qwerty.xml \
+	table.xml
+engine_vkbddir = $(pkgdatadir)/vkbd
 
 libexec_SCRIPTS = ibus-engine-skk
 engine_DATA = skk.xml
