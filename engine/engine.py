@@ -189,7 +189,10 @@ class Engine(ibus.EngineBase):
                                         'vkbd', 'qwerty.xml')
         vkbd_table_path = os.path.join(os.getenv('IBUS_SKK_PKGDATADIR'),
                                        'vkbd', 'table.xml')
-        self.__vkbd = vkbd.Vkbd(self, vkbd_qwerty_path, vkbd_table_path)
+        try:
+            self.__vkbd = vkbd.Vkbd(self, vkbd_qwerty_path, vkbd_table_path)
+        except:
+            self.__vkbd = None
 
         self.__skk.reset()
         self.__skk.activate_input_mode(self.__initial_input_mode)
