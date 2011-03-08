@@ -27,11 +27,11 @@ from ibus import modifier
 import sys, os, os.path, time
 import skk
 import nicola
+import vkbd
 try:
     from gtk import clipboard_get
 except ImportError:
     clipboard_get = lambda a : None
-import vkbd
 
 from gettext import dgettext
 _  = lambda a : dgettext("ibus-skk", a)
