@@ -27,7 +27,10 @@ from ibus import modifier
 import sys, os, os.path, time
 import skk
 import nicola
-import vkbd
+try:
+    import vkbd
+except:
+    pass
 try:
     from gtk import clipboard_get
 except ImportError:
